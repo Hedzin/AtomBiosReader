@@ -120,6 +120,7 @@ public class AtomBiosReader {
 		
 		ATOM_VOLTAGE_OBJECT_INFO_V3_1 voltageObjectInfoS = new ATOM_VOLTAGE_OBJECT_INFO_V3_1(voltageObjectInfoBB);
 		
+		
 	}
 	private static int get_table_offset(AtomMasterListOfCommandTables table, int idx)
 	{
