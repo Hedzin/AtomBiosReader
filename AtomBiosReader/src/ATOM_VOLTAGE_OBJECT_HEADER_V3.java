@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
 
-public class ATOM_VOLTAGE_OBJECT_HEADER_V3 implements IContainer {
+public class ATOM_VOLTAGE_OBJECT_HEADER_V3 extends AContainer {
 	
 	
 	/*
@@ -21,9 +23,9 @@ public class ATOM_VOLTAGE_OBJECT_HEADER_V3 implements IContainer {
 		#define VOLTAGE_TYPE_VDDGFX                  5
 		#define VOLTAGE_TYPE_PCC                     6
 	 */
-	 Byte		ucVoltageType;									//Indicate Voltage Source: VDDC, MVDDC, MVDDQ or MVDDCI	 
-	 Byte		ucVoltageMode;							    //Indicate voltage control mode: Init/Set/Leakage/Set phase 
-	 Short		usSize;													//Size of Object
+	ByteStructure		ucVoltageType = new ByteStructure();;									//Indicate Voltage Source: VDDC, MVDDC, MVDDQ or MVDDCI	 
+	ByteStructure		ucVoltageMode = new ByteStructure();;							    //Indicate voltage control mode: Init/Set/Leakage/Set phase 
+	 ShortStructure		usSize = new ShortStructure();;													//Size of Object
 	 StructureDataType dataType = StructureDataType.container; 
 	 StructureType type = StructureType.finale; 
 	 
@@ -32,5 +34,26 @@ public class ATOM_VOLTAGE_OBJECT_HEADER_V3 implements IContainer {
 			int length = 4;
 
 			return length;
+		}
+		@Override
+		public List<IStructure> getSubStructureList() {
+			List<IStructure> list = new  ArrayList<IStructure>();
+			list.add(ucVoltageType);
+			list.add(ucVoltageMode);
+			list.add(usSize);
+			return list;
+		}
+		public ATOM_VOLTAGE_OBJECT_HEADER_V3( BinaryDataBlock binDataBlock) {
+			super.subStructureList = getSubStructureList();
+			super.binDataBlock = binDataBlock;
+			super.process();
+			this.binDataBlock.printHexString();
+			System.out.println("ucVoltageType: "+ucVoltageType.binDataBlock.getIntegerLE() + " & HEX: "+ucVoltageType.binDataBlock.getHexString());
+			System.out.println("ucVoltageMode: "+ucVoltageMode.binDataBlock.getIntegerLE() + " & HEX: "+ucVoltageMode.binDataBlock.getHexString());
+			System.out.println("usSize: "+usSize.binDataBlock.getIntegerLE() + " & HEX: "+usSize.binDataBlock.getHexString());
+
+		}
+		public ATOM_VOLTAGE_OBJECT_HEADER_V3() {
+			// TODO Auto-generated constructor stub
 		}
 }

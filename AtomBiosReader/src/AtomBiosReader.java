@@ -87,7 +87,7 @@ public class AtomBiosReader {
 		newtest(tabs.base);
 	}
 	private static void newtest(byte[] base) {
-		String offset = "0xb6ea";
+		String offset = "0xb6ec";
 		String lenght = "0x40";
 		int offsetI = Integer.decode(offset);
 		int lenghtI = Integer.decode(lenght);

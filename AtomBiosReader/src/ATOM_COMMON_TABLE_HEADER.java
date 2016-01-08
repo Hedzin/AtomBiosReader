@@ -1,4 +1,3 @@
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +12,10 @@ public class ATOM_COMMON_TABLE_HEADER extends AContainer {
 		super.subStructureList = getSubStructureList();
 		super.binDataBlock = voltageObjectInfoHeaderBB;
 		super.process();
-		byte[] array =  new byte[1];
-		ucTableContentRevision.binDataBlock.getBody().get(array);
-		System.out.println("ddd"+Hex.encodeHexString(array));
+		this.binDataBlock.printHexString();
+		System.out.println("usStructureSize: "+usStructureSize.binDataBlock.getIntegerLE() + " & HEX: "+usStructureSize.binDataBlock.getHexString());
+		System.out.println("ucTableFormatRevision: "+ucTableFormatRevision.binDataBlock.getIntegerLE() + " & HEX: "+ucTableFormatRevision.binDataBlock.getHexString());
+		System.out.println("ucTableContentRevision: "+ucTableContentRevision.binDataBlock.getIntegerLE() + " & HEX: "+ucTableContentRevision.binDataBlock.getHexString());
 
 	}
 	public ATOM_COMMON_TABLE_HEADER() {
