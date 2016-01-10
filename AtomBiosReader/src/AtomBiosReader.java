@@ -6,6 +6,7 @@ import java.nio.ByteOrder;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -104,7 +105,7 @@ public class AtomBiosReader {
 		voltageObjectInfoHeaderBB.setLength(4);
 		voltageObjectInfoHeaderBB.setOffset(0);
 		voltageObjectInfoHeaderBB.setName("VoltageObjectInfoHeader");
-		ATOM_COMMON_TABLE_HEADER  voltageTableHeader = new ATOM_COMMON_TABLE_HEADER(voltageObjectInfoHeaderBB);
+		//ATOM_COMMON_TABLE_HEADER  voltageTableHeader = new ATOM_COMMON_TABLE_HEADER(voltageObjectInfoHeaderBB);
 		
 		
 		vBB.limit(lenghtI);
@@ -119,9 +120,23 @@ public class AtomBiosReader {
 		voltageObjectInfoBB.setName("VoltageObjectInfo");
 		
 		ATOM_VOLTAGE_OBJECT_INFO_V3_1 voltageObjectInfoS = new ATOM_VOLTAGE_OBJECT_INFO_V3_1(voltageObjectInfoBB);
+		binaryDataBlockPrinter(voltageObjectInfoS.getBinaryDataBlock());
 		
 		
 	}
+	
+		private static void binaryDataBlockPrinter(BinaryDataBlock bdb) {
+			bdb.printHexString();
+			List<BinaryDataBlock> bdbsubList = bdb.getChildList();
+			for (BinaryDataBlock binaryDataBlock : bdbsubList) {
+				System.out.print(binaryDataBlock.getName()+": ");
+				binaryDataBlockPrinter(binaryDataBlock);
+			}
+
+		}
+	
+	
+	
 	private static int get_table_offset(AtomMasterListOfCommandTables table, int idx)
 	{
 		int i;

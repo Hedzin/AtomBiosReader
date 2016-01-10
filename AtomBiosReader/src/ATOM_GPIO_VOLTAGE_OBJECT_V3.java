@@ -1,17 +1,48 @@
+import java.util.ArrayList;
+import java.util.List;
 
-public class ATOM_GPIO_VOLTAGE_OBJECT_V3 implements IStructure {
-	   ATOM_VOLTAGE_OBJECT_HEADER_V3 sHeader;   // voltage mode = VOLTAGE_OBJ_GPIO_LUT or VOLTAGE_OBJ_PHASE_LUT
-	   Byte    ucVoltageGpioCntlId;         // default is 0 which indicate control through CG VID mode 
-	   Byte    ucGpioEntryNum;              // indiate the entry numbers of Votlage/Gpio value Look up table
-	   Byte    ucPhaseDelay;                // phase delay in unit of micro second
-	   Byte    ucReserved;   
-	   Long    ulGpioMaskVal;               // GPIO Mask value
-	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut;
-	@Override
-	public int getLength() {
-		int length = 12;
-		length += new ATOM_VOLTAGE_OBJECT_HEADER_V3().getLength();
-		length += new VOLTAGE_LUT_ENTRY_V2().getLength();
-		return length;  
-	}
+public class ATOM_GPIO_VOLTAGE_OBJECT_V3 extends ADynamicContainer {
+	   ATOM_VOLTAGE_OBJECT_HEADER_V3 sHeader =  new ATOM_VOLTAGE_OBJECT_HEADER_V3();   // voltage mode = VOLTAGE_OBJ_GPIO_LUT or VOLTAGE_OBJ_PHASE_LUT
+	   ByteStructure    ucVoltageGpioCntlId =  new ByteStructure();         // default is 0 which indicate control through CG VID mode 
+	   ByteStructure    ucGpioEntryNum =  new ByteStructure();              // indiate the entry numbers of Votlage/Gpio value Look up table
+	   ByteStructure    ucPhaseDelay =  new ByteStructure();                // phase delay in unit of micro second
+	   ByteStructure    ucReserved =  new ByteStructure();   
+	   LongStructure    ulGpioMaskVal =  new LongStructure();               // GPIO Mask value
+	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut1 =  new VOLTAGE_LUT_ENTRY_V2();
+	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut2 =  new VOLTAGE_LUT_ENTRY_V2();
+	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut3 =  new VOLTAGE_LUT_ENTRY_V2();
+	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut4 =  new VOLTAGE_LUT_ENTRY_V2();
+	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut5 =  new VOLTAGE_LUT_ENTRY_V2();
+	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut6=  new VOLTAGE_LUT_ENTRY_V2();
+	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut7 =  new VOLTAGE_LUT_ENTRY_V2();
+	   VOLTAGE_LUT_ENTRY_V2 asVolGpioLut8 =  new VOLTAGE_LUT_ENTRY_V2();
+		@Override
+		public List<IStructure> getSubStructureList() {
+			System.out.println("ATOM_GPIO_VOLTAGE_OBJECT_V3 getSubStructureList()");
+			List<IStructure> list = new  ArrayList<IStructure>();
+			list.add(sHeader);
+			list.add(ucVoltageGpioCntlId);
+			list.add(ucGpioEntryNum);
+			list.add(ucPhaseDelay);
+			list.add(ucReserved);
+			list.add(ulGpioMaskVal);
+			if(ucGpioEntryNum.getBinaryDataBlock()!=null){
+				int ucGpioEntrycount = ucGpioEntryNum.getBinaryDataBlock().getIntegerLE();
+				System.out.println("ATOM_GPIO_VOLTAGE_OBJECT_V3 ucGpioEntrycount: "+ucGpioEntrycount);
+				switch (ucGpioEntrycount) {
+				case 8:	list.add(asVolGpioLut8);
+				case 7:	list.add(asVolGpioLut7);	
+				case 6:	list.add(asVolGpioLut6);
+				case 5:	list.add(asVolGpioLut5);
+				case 4:	list.add(asVolGpioLut4);
+				case 3:	list.add(asVolGpioLut3);
+				case 2:	list.add(asVolGpioLut2);
+				case 1:	list.add(asVolGpioLut1);
+				default:
+					break;
+				}
+			}
+			return list;
+		}
+
 }

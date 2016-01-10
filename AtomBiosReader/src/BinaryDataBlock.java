@@ -99,9 +99,9 @@ public class BinaryDataBlock {
 	}
 	public String getHexString() {
 		body.rewind();
-		System.out.println("BinaryDataBlock  getHexString debugl: "+length);
-		System.out.println("BinaryDataBlock  getHexString body.limit: "+body.limit());
-		System.out.println("BinaryDataBlock  getHexString body.pos: "+body.position());
+		//System.out.println("BinaryDataBlock  getHexString debugl: "+length);
+		//System.out.println("BinaryDataBlock  getHexString body.limit: "+body.limit());
+		//System.out.println("BinaryDataBlock  getHexString body.pos: "+body.position());
 		byte[] bytearray = new byte[length];
 		body.get(bytearray);
 		return Hex.encodeHexString(bytearray);

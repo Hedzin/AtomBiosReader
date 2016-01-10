@@ -16,4 +16,6 @@ public interface IStructure {
 
 	void setBinaryDataBlock(BinaryDataBlock bdb);
 
+	void init();
+	//void populateDetailsInBDB();
 }
