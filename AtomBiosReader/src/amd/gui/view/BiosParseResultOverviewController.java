@@ -6,8 +6,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import amd.gui.AtomBiosReader;
 import amd.gui.model.BiosTable;
+import backend.BinaryDataBlock;
 
 
 public class BiosParseResultOverviewController {
@@ -15,6 +19,26 @@ public class BiosParseResultOverviewController {
 	private TableView<BiosTable> biosTables;
 	@FXML
 	private TableColumn<BiosTable, String> tableNameColumn;
+	
+	@FXML
+	private TreeTableView<BinaryDataBlock> tablecontent;
+	
+	
+	@FXML
+	private TreeTableColumn<BinaryDataBlock,String> bdbName;
+	@FXML
+	private TreeTableColumn<BinaryDataBlock,String> bdbFullOffset;
+	@FXML
+	private TreeTableColumn<BinaryDataBlock,String> bdbTableOffset;
+	@FXML
+	private TreeTableColumn<BinaryDataBlock,String> bdbSize;
+	@FXML
+	private TreeTableColumn<BinaryDataBlock,String> bdbHexValue;
+	@FXML
+	private TreeTableColumn<BinaryDataBlock,String> bdbType;
+	@FXML
+	private TreeTableColumn<BinaryDataBlock,String> bdbValue;
+	
 //	@FXML
 //	private TableColumn<BiosTable, String> lastNameColumn;
 
@@ -84,6 +108,13 @@ public class BiosParseResultOverviewController {
 	private void showBiosTableDetails(BiosTable table) {
 		if (table != null) {
 			// Fill the labels with info from the person object.
+			
+			 TreeItem<BinaryDataBlock> root = new TreeItem<>(table.binDataBlock);
+			 tablecontent.setRoot(root);
+			 tablecontent.getColumns().setAll(bdbName,bdbFullOffset,bdbTableOffset,bdbSize,bdbHexValue,bdbType,bdbValue);
+			 bdbName.setCellValueFactory(param -> param.getValue().getValue().getName());
+			 
+	
 //			firstNameLabel.setText(person.getFirstName());
 //			lastNameLabel.setText(person.getLastName());
 //			streetLabel.setText(person.getStreet());

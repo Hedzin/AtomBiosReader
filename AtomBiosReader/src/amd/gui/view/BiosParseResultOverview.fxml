@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="472.0" prefWidth="993.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="amd.gui.view.BiosParseResultOverviewController">
+<AnchorPane prefHeight="472.0" prefWidth="993.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="amd.gui.view.BiosParseResultOverviewController">
    <children>
       <SplitPane dividerPositions="0.22209165687426558" prefHeight="472.0" prefWidth="853.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -24,15 +25,15 @@
             </AnchorPane>
           <AnchorPane>
                <children>
-                  <TreeTableView prefHeight="470.0" prefWidth="594.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TreeTableView fx:id="tablecontent" prefHeight="470.0" prefWidth="594.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TreeTableColumn prefWidth="75.0" text="Name" />
-                        <TreeTableColumn prefWidth="75.0" text="Full Offset" />
-                      <TreeTableColumn prefWidth="75.0" text="Table Offset" />
-                        <TreeTableColumn prefWidth="75.0" text="Size" />
-                        <TreeTableColumn prefWidth="75.0" text="HEX Value" />
-                        <TreeTableColumn prefWidth="75.0" text="Type" />
-                        <TreeTableColumn prefWidth="75.0" text="Value" />
+                      <TreeTableColumn fx:id="bdbName" prefWidth="75.0" text="Name" />
+                        <TreeTableColumn fx:id="bdbFullOffset" prefWidth="75.0" text="Full Offset" />
+                      <TreeTableColumn fx:id="bdbTableOffset" prefWidth="75.0" text="Table Offset" />
+                        <TreeTableColumn fx:id="bdbSize" prefWidth="75.0" text="Size" />
+                        <TreeTableColumn fx:id="bdbHexValue" prefWidth="75.0" text="HEX Value" />
+                        <TreeTableColumn fx:id="bdbType" prefWidth="75.0" text="Type" />
+                        <TreeTableColumn fx:id="bdbValue" prefWidth="75.0" text="Value" />
                     </columns>
                      <columnResizePolicy>
                         <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -20,7 +20,7 @@ import javafx.beans.property.StringProperty;
 public class BiosTable {
 
 	private final StringProperty tableName;
-	BinaryDataBlock binDataBlock;
+	public BinaryDataBlock binDataBlock;
 //	private final StringProperty lastName;
 //	private final StringProperty street;
 //	private final IntegerProperty postalCode;
