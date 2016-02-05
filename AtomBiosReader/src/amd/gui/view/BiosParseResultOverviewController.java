@@ -1,5 +1,6 @@
 package amd.gui.view;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -112,7 +113,7 @@ public class BiosParseResultOverviewController {
 			 TreeItem<BinaryDataBlock> root = new TreeItem<>(table.binDataBlock);
 			 tablecontent.setRoot(root);
 			 tablecontent.getColumns().setAll(bdbName,bdbFullOffset,bdbTableOffset,bdbSize,bdbHexValue,bdbType,bdbValue);
-			 bdbName.setCellValueFactory(param -> param.getValue().getValue().getName());
+			 bdbName.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getName()));
 			 
 	
 //			firstNameLabel.setText(person.getFirstName());
