@@ -98,10 +98,13 @@ public class AtomBiosReader extends Application {
 			
 			BiosTable romHeader = new BiosTable(atomBios.atomRomHeader.getBinaryDataBlock());
 			biosTables.add(romHeader);
-			
+			biosTables.add( new BiosTable(atomBios.atomMasterDataTable.getBinaryDataBlock()));
+			biosTables.add( new BiosTable(atomBios.atomMasterCommandTable.getBinaryDataBlock()));
+			biosTables.add( new BiosTable(atomBios.atomVoltageObjectInfoTable.getBinaryDataBlock()));
 			
 			
 		} catch (Exception e) { // catches ANY exception
+			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Could not load data");

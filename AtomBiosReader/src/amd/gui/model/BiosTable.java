@@ -34,7 +34,7 @@ public class BiosTable {
 	public BiosTable(BinaryDataBlock binDataBlock) {
 		this.binDataBlock = binDataBlock;
 		String name = binDataBlock.getName();
-		if(name.trim().equals(""))this.tableName = new SimpleStringProperty("UNKNOWN");
+		if(name==null||name.trim().equals(""))this.tableName = new SimpleStringProperty("UNKNOWN");
 		else this.tableName = new SimpleStringProperty(name);
 //		this.lastName = new SimpleStringProperty(lastName);
 //

@@ -110,11 +110,17 @@ public class BiosParseResultOverviewController {
 		if (table != null) {
 			// Fill the labels with info from the person object.
 			
-			 TreeItem<BinaryDataBlock> root = new TreeItem<>(table.binDataBlock);
+			 //TreeItem<BinaryDataBlock> root = new TreeItem<>(table.binDataBlock);
+			TreeItem<BinaryDataBlock> root = TreeItemFactory.getTreeItem(table.binDataBlock);
 			 tablecontent.setRoot(root);
 			 tablecontent.getColumns().setAll(bdbName,bdbFullOffset,bdbTableOffset,bdbSize,bdbHexValue,bdbType,bdbValue);
 			 bdbName.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getName()));
-			 
+			 bdbFullOffset.setCellValueFactory(param -> new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getOffset())));
+			 bdbTableOffset.setCellValueFactory(param -> new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getOffset())));
+			 bdbSize.setCellValueFactory(param -> new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getLength())));
+			 bdbHexValue.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getHexString()));
+			 bdbType.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getComment()));
+			 bdbValue.setCellValueFactory(param -> new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getIntegerLE())));
 	
 //			firstNameLabel.setText(person.getFirstName());
 //			lastNameLabel.setText(person.getLastName());

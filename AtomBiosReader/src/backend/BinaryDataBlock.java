@@ -49,6 +49,7 @@ public class BinaryDataBlock {
 				throw new Exception("unexpexted lenght:"+length);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
+				System.out.println(this.getName());
 				e.printStackTrace();
 			}
 			break;
