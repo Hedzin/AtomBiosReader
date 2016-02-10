@@ -45,5 +45,28 @@ public class ATOM_GPIO_VOLTAGE_OBJECT_V3 extends ADynamicContainer {
 			}
 			return list;
 		}
+		@Override
+		public void fillSubListDescriptions() {
+			    sHeader.setName("ATOM_VOLTAGE_OBJECT_HEADER_V3");
+			    sHeader.setDescription("voltage mode = VOLTAGE_OBJ_GPIO_LUT or VOLTAGE_OBJ_PHASE_LUT");
+			       ucVoltageGpioCntlId.setName("VoltageGpioCntlId");  
+			       ucVoltageGpioCntlId.setDescription("default is 0 which indicate control through CG VID mode");
+			       ucGpioEntryNum .setName("GpioEntryNum");        
+			       ucGpioEntryNum.setDescription("indicate the entry numbers of Votlage/Gpio value Look up table");
+			       ucPhaseDelay.setName("PhaseDelay");          
+			       ucPhaseDelay.setDescription("phase delay in unit of micro second");
+			       ucReserved.setName("Reserved");  
+			       ulGpioMaskVal.setName("GpioMaskVal"); 
+			       ulGpioMaskVal.setDescription("GPIO Mask value");
+			    asVolGpioLut1.setName("VOLTAGE_LUT_ENTRY1_V2");
+			    asVolGpioLut2.setName("VOLTAGE_LUT_ENTRY2_V2");
+			    asVolGpioLut3.setName("VOLTAGE_LUT_ENTRY3_V2");
+			    asVolGpioLut4.setName("VOLTAGE_LUT_ENTRY4_V2");
+			    asVolGpioLut5.setName("VOLTAGE_LUT_ENTRY5_V2");
+			    asVolGpioLut6.setName("VOLTAGE_LUT_ENTRY6_V2");
+			    asVolGpioLut7.setName("VOLTAGE_LUT_ENTRY7_V2");
+			    asVolGpioLut8.setName("VOLTAGE_LUT_ENTRY8_V2");
 
+			super.fillSubListDescriptions();
+		}
 }

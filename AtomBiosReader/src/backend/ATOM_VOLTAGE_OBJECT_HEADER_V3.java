@@ -57,4 +57,16 @@ public class ATOM_VOLTAGE_OBJECT_HEADER_V3 extends AContainer {
 		public ATOM_VOLTAGE_OBJECT_HEADER_V3() {
 			// TODO Auto-generated constructor stub
 		}
+		@Override
+		public void fillSubListDescriptions() {
+			 ucVoltageType.setName("VoltageType");
+			 ucVoltageType.setDescription("Indicate Voltage Source: VDDC, MVDDC, MVDDQ or MVDDCI	 ");
+			 ucVoltageMode.setName("VoltageMode");  
+			 ucVoltageMode.setDescription("Indicate voltage control mode: Init/Set/Leakage/Set phase ");
+			 usSize .setName("Size");        
+			 usSize.setDescription("Size of Object");
+
+
+			super.fillSubListDescriptions();
+		}
 }

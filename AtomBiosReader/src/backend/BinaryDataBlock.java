@@ -80,7 +80,9 @@ public class BinaryDataBlock {
 		this.childList = childList;
 	}
 	public String getName() {
-		return name;
+		if (name!=null && name.trim().length()>0)return name;
+		else if(type!=null && type.trim().length()>0)return type;
+		else return "N/A";
 	}
 	public void setName(String name) {
 		this.name = name;

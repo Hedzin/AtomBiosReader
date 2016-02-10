@@ -81,6 +81,8 @@ public abstract class AStructure implements IStructure {
 
 	@Override
 	public void process() {
+		
+		//subStructureList.clear();
 		// System.out.println("binDataBlock.getBody().position():
 		// "+binDataBlock.getBody().position());
 		// System.out.println("binDataBlock.getBody().limit():

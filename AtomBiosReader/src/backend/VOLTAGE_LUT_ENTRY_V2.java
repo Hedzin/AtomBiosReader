@@ -13,5 +13,15 @@ public class VOLTAGE_LUT_ENTRY_V2 extends  AContainer {
 		list.add(usVoltageValue);
 		return list;
 	}
+	@Override
+	public void fillSubListDescriptions() {
+		ulVoltageId.setName("VoltageId");
+		ulVoltageId.setDescription("The Voltage ID which is used to program GPIO register");
+		usVoltageValue.setName("VoltageValue");  
+		usVoltageValue.setDescription("The corresponding Voltage Value, in mV");
 
+
+
+		super.fillSubListDescriptions();
+	}
 }

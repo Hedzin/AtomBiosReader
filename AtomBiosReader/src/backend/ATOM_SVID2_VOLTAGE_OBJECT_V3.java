@@ -24,5 +24,18 @@ public class ATOM_SVID2_VOLTAGE_OBJECT_V3 extends AContainer {
 		list.add(ulReserved);
 		return list;
 	}
-		
+	@Override
+	public void fillSubListDescriptions() {
+		sHeader.setName("ATOM_VOLTAGE_OBJECT_HEADER_V3");
+		sHeader.setDescription("voltage mode = VOLTAGE_OBJ_SVID2");
+		usLoadLine_PSI.setName("LoadLine_PSI");
+		ucSVDGpioId.setName("SVDGpioId");
+		ucSVDGpioId.setDescription("GPU GPIO pin Id to SVID2 regulator VRHot pin. possible value 0~31. 0 means GPIO0, 31 means GPIO31");
+
+		ucSVCGpioId.setName("SVCGpioId");
+		ucSVCGpioId.setDescription("GPU GPIO pin Id to SVID2 regulator VRHot pin. possible value 0~31. 0 means GPIO0, 31 means GPIO31");
+
+		ulReserved.setName("Reserved");
+		super.fillSubListDescriptions();
+	}
 }

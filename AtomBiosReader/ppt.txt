@@ -1,0 +1,571 @@
+ATOM_COMMON_TABLE_HEADER   sHeader;
+9502 size
+07 v7
+01 v1
+
+
+
+
+
+
+00 UCHAR  ucTableRevision;
+4d00 USHORT usTableSize;	
+34050000 ULONG	ulGoldenPPID;
+c81e0000 ULONG	ulGoldenRevision;
+1600 USHORT	usFormatID;
+
+e803 USHORT	usVoltageTime;					 /*in microseconds */
+
+01800200 ULONG	ulPlatformCaps;					  /*See ATOM_Tonga_CAPS_* */
+
+
+	
+c0d40100 ULONG	ulMaxODEngineClock; 			   /*For Overdrive.  */
+98ab0200  ULONG	ulMaxODMemoryClock; 			   /*For Overdrive. */
+
+
+1400 USHORT	usPowerControlLimit;
+3200 USHORT	usUlvVoltageOffset;	
+
+
+4d00 	USHORT	usStateArrayOffset;				  /*points to ATOM_Tonga_State_Array */
+2f02	USHORT	usFanTableOffset;				  /*points to ATOM_Tonga_Fan_Table */
+2602	USHORT	usThermalControllerOffset;		   /*points to ATOM_Tonga_Thermal_Controller */
+0000	USHORT	usReserv;						   /*CustomThermalPolicy removed for Tonga. Keep this filed as reserved. */
+
+
+4d01	USHORT	usMclkDependencyTableOffset;	   /*points to ATOM_Tonga_MCLK_Dependency_Table */
+f300	USHORT	usSclkDependencyTableOffset;	   /*points to ATOM_Tonga_SCLK_Dependency_Table */
+7700	USHORT	usVddcLookupTableOffset;		   /*points to ATOM_Tonga_Voltage_Lookup_Table */
+b100	USHORT	usVddgfxLookupTableOffset; 		/*points to ATOM_Tonga_Voltage_Lookup_Table */
+
+8301	USHORT	usMMDependencyTableOffset;		  /*points to ATOM_Tonga_MM_Dependency_Table */
+6d02	USHORT	usVCEStateTableOffset;			   /*points to ATOM_Tonga_VCE_State_Table; */
+0000	USHORT	usPPMTableOffset;				  /*points to ATOM_Tonga_PPM_Table */
+4e02	USHORT	usPowerTuneTableOffset;			  /*points to ATOM_PowerTune_Table */
+0000	USHORT	usHardLimitTableOffset; 		   /*points to ATOM_Tonga_Hard_Limit_Table */
+8702	USHORT	usPCIETableOffset;				  /*points to ATOM_Tonga_PCIE_Table */
+0000	USHORT	usGPIOTableOffset;				  /*points to ATOM_Tonga_GPIO_Table */
+
+0000	USHORT	usReserved[6];					   /*TODO: modify reserved size to fit structure aligning */
+0000
+0000
+0000
+0000
+0000
+******************************77
+typedef struct _ATOM_Tonga_State_Array {
+	
+	
+	ATOM_Tonga_State states[1];	/* Dynamically allocate entries. */
+} ATOM_Tonga_State_Array;
+
+01 UCHAR ucRevId;
+02 UCHAR ucNumEntries;		/* Number of entries. */
+
+typedef struct _ATOM_Tonga_State {
+	
+} ATOM_Tonga_State;
+
+00 UCHAR  ucEngineClockIndexHigh;
+00 UCHAR  ucEngineClockIndexLow;
+00 UCHAR  ucMemoryClockIndexHigh;
+00 UCHAR  ucMemoryClockIndexLow;
+00 UCHAR  ucPCIEGenLow;
+00 UCHAR  ucPCIEGenHigh;
+00  UCHAR  ucPCIELaneLow;
+00 UCHAR  ucPCIELaneHigh;
+0800 USHORT usClassification;
+00000000	ULONG ulCapsAndSettings;
+0000 USHORT usClassification2;
+00000000 UCHAR  ucUnused[4];
+ 
+07  UCHAR  ucEngineClockIndexHigh;
+00  UCHAR  ucEngineClockIndexLow;
+03  UCHAR  ucMemoryClockIndexHigh;
+00  UCHAR  ucMemoryClockIndexLow;
+00  UCHAR  ucPCIEGenLow;
+00 UCHAR  ucPCIEGenHigh;
+00  UCHAR  ucPCIELaneLow;
+00 UCHAR  ucPCIELaneHigh;
+0500 USHORT usClassification;
+00000000	ULONG ulCapsAndSettings;
+0000 USHORT usClassification2;
+00000000 UCHAR  ucUnused[4];
+
+***********119 usVddcLookupTable
+typedef struct _ATOM_Tonga_Voltage_Lookup_Table {
+	
+										/* Number of entries. */
+	ATOM_Tonga_Voltage_Lookup_Record entries[1];				/* Dynamically allocate entries. */
+} ATOM_Tonga_Voltage_Lookup_Table;
+
+00 UCHAR ucRevId;
+07 UCHAR ucNumEntries; 	
+
+
+typedef struct _ATOM_Tonga_Voltage_Lookup_Record {
+	USHORT usVdd;											   /* Base voltage */
+	USHORT usCACLow;
+	USHORT usCACMid;
+	USHORT usCACHigh;
+
+8403
+8403
+8403
+8403
+
+cf03
+cf03
+cf03
+cf03
+
+e803
+e803
+e803
+e803
+
+0104
+0104
+0104
+0104
+
+1a04
+1a04
+1a04
+1a04
+
+4c04
+4c04
+4c04
+4c04
+
+7e04
+7e04
+7e04
+7e04
+	VddgfxLookupTable
+00
+08
+8403
+8403
+8403
+8403
+
+02ff
+b003
+bc03
+bc03
+
+03ff
+e803
+c903
+c903
+
+04ff
+3904
+fa03
+cf03
+
+05ff
+5f04
+2004
+cf03
+
+
+06ff
+8b04
+4c04
+e803
+
+07ff
+b004
+6b04
+0704
+
+08ff
+1a05
+8a04
+2c04
+
+typedef struct _ATOM_Tonga_SCLK_Dependency_Table {
+	UCHAR ucRevId;
+	UCHAR ucNumEntries; 										/* Number of entries. */
+	ATOM_Tonga_SCLK_Dependency_Record entries[1];				 /* Dynamically allocate entries. */
+} ATOM_Tonga_SCLK_Dependency_Table;
+00
+08
+
+typedef struct _ATOM_Tonga_SCLK_Dependency_Record {
+	UCHAR  ucVddInd;											/* Base voltage */
+	USHORT usVddcOffset;										/* Offset relative to base voltage */
+	ULONG ulSclk;
+	USHORT usEdcCurrent;
+	UCHAR  ucReliabilityTemperature;
+	UCHAR  ucCKSVOffsetandDisable;							  /* Bits 0~6: Voltage offset for CKS, Bit 7: Disable/enable for the SCLK level. */
+} ATOM_Tonga_SCLK_Dependency_Record;
+
+
+00
+0000
+30750000
+0000
+00
+80
+
+01
+e6ff
+c4b80000
+0000
+00
+80
+
+02
+e6ff
+04230100
+0000
+00
+00
+
+03
+e6ff
+d4430100
+0000
+00
+00
+
+04
+e6ff
+d8530100
+0000
+00
+00
+
+05
+e6ff
+bc600100
+0000
+00
+00
+
+06
+e6ff
+686e0100
+0000
+00
+00
+
+07
+cdff
+c4800100
+0000
+00
+00
+
+
+typedef struct _ATOM_Tonga_MCLK_Dependency_Table {
+	UCHAR ucRevId;
+	UCHAR ucNumEntries; 										/* Number of entries. */
+	ATOM_Tonga_MCLK_Dependency_Record entries[1];				/* Dynamically allocate entries. */
+} ATOM_Tonga_MCLK_Dependency_Table;
+
+00
+04
+
+
+typedef struct _ATOM_Tonga_MCLK_Dependency_Record {
+	UCHAR  ucVddcInd;	/* Vddc voltage */
+	USHORT usVddci;
+	USHORT usVddgfxOffset;	/* Offset relative to Vddc voltage */
+	USHORT usMvdd;
+	ULONG ulMclk;
+	USHORT usReserved;
+} ATOM_Tonga_MCLK_Dependency_Record;
+
+
+00
+3903
+0000
+8403
+983a0000
+0000
+
+00
+3903
+0000
+e803
+30750000
+0000
+
+00
+cf03
+0000
+e803
+70110100
+0000
+
+01
+4c04
+b4ff
+e803
+68360200
+0000
+
+
+
+
+typedef struct _ATOM_Tonga_MM_Dependency_Table {
+	UCHAR ucRevId;
+	UCHAR ucNumEntries; 										/* Number of entries. */
+	ATOM_Tonga_MM_Dependency_Record entries[1]; 			   /* Dynamically allocate entries. */
+} ATOM_Tonga_MM_Dependency_Table;
+
+00
+07
+
+typedef struct _ATOM_Tonga_MM_Dependency_Record {
+	UCHAR   ucVddcInd;											 /* VDDC voltage */
+	USHORT  usVddgfxOffset;									  /* Offset relative to VDDC voltage */
+	ULONG  ulDClk;												/* UVD D-clock */
+	ULONG  ulVClk;												/* UVD V-clock */
+	ULONG  ulEClk;												/* VCE clock */
+	ULONG  ulAClk;												/* ACP clock */
+	ULONG  ulSAMUClk;											/* SAMU clock */
+} ATOM_Tonga_MM_Dependency_Record;
+
+00
+0000
+04a60000
+d8d60000
+c8af0000
+e8fd0000
+409c0000
+
+01
+b4ff
+14cd0000
+ac070100
+d8d60000
+f8240100
+409c0000
+
+02
+9bff
+9ce00000
+341b0100
+9ce00000
+80380100
+409c0000
+
+03
+82ff
+24f40000
+bc2e0100
+60ea0000
+44420100
+409c0000
+
+04
+69ff
+e8fd0000
+44420100
+24f40000
+084c0100
+409c0000
+
+05
+37ff
+f8240100
+54690100
+ac070100
+905f0100
+409c0000
+
+06
+05ff
+084c0100
+a0860100
+341b0100
+18730100
+409c0000
+
+typedef struct _ATOM_Tonga_Thermal_Controller {
+	UCHAR ucRevId;
+	UCHAR ucType;		   /* one of ATOM_TONGA_PP_THERMALCONTROLLER_* */
+	UCHAR ucI2cLine;		/* as interpreted by DAL I2C */
+	UCHAR ucI2cAddress;
+	UCHAR ucFanParameters;	/* Fan Control Parameters. */
+	UCHAR ucFanMinRPM; 	 /* Fan Minimum RPM (hundreds) -- for display purposes only. */
+	UCHAR ucFanMaxRPM; 	 /* Fan Maximum RPM (hundreds) -- for display purposes only. */
+	UCHAR ucReserved;
+	UCHAR ucFlags;		   /* to be defined */
+} ATOM_Tonga_Thermal_Controller;
+
+01
+15
+00
+00
+02
+00
+3c
+00
+00
+
+
+typedef struct _ATOM_Tonga_Fan_Table {
+	UCHAR   ucRevId;						 /* Change this if the table format changes or version changes so that the other fields are not the same. */
+	UCHAR   ucTHyst;						 /* Temperature hysteresis. Integer. */
+	USHORT  usTMin; 						 /* The temperature, in 0.01 centigrades, below which we just run at a minimal PWM. */
+	USHORT  usTMed; 						 /* The middle temperature where we change slopes. */
+	USHORT  usTHigh;						 /* The high point above TMed for adjusting the second slope. */
+	USHORT  usPWMMin;						 /* The minimum PWM value in percent (0.01% increments). */
+	USHORT  usPWMMed;						 /* The PWM value (in percent) at TMed. */
+	USHORT  usPWMHigh;						 /* The PWM value at THigh. */
+	USHORT  usTMax; 						 /* The max temperature */
+	UCHAR   ucFanControlMode;				  /* Legacy or Fuzzy Fan mode */
+	USHORT  usFanPWMMax;					  /* Maximum allowed fan power in percent */
+	USHORT  usFanOutputSensitivity;		  /* Sensitivity of fan reaction to temepature changes */
+	USHORT  usFanRPMMax;					  /* The default value in RPM */
+	ULONG  ulMinFanSCLKAcousticLimit;	   /* Minimum Fan Controller SCLK Frequency Acoustic Limit. */
+	UCHAR   ucTargetTemperature;			 /* Advanced fan controller target temperature. */
+	UCHAR   ucMinimumPWMLimit; 			  /* The minimum PWM that the advanced fan controller can set.	This should be set to the highest PWM that will run the fan at its lowest RPM. */
+	USHORT  usReserved;
+} ATOM_Tonga_Fan_Table;
+
+05
+04
+5014
+b414
+fc21
+
+d007
+ac0d
+bc1b
+
+1c25
+
+00
+6400
+e412
+be0a
+00000000
+00
+00
+0000
+
+
+typedef struct _ATOM_Tonga_PowerTune_Table {
+	UCHAR  ucRevId;
+	USHORT usTDP;
+	USHORT usConfigurableTDP;
+	USHORT usTDC;
+	USHORT usBatteryPowerLimit;
+	USHORT usSmallPowerLimit;
+	USHORT usLowCACLeakage;
+	USHORT usHighCACLeakage;
+	USHORT usMaximumPowerDeliveryLimit;
+	USHORT usTjMax;
+	USHORT usPowerTuneDataSetID;
+	USHORT usEDCLimit;
+	USHORT usSoftwareShutdownTemp;
+	USHORT usClockStretchAmount;
+	USHORT usReserve[2];
+} ATOM_Tonga_PowerTune_Table;
+
+02
+9600
+9c00
+8100
+9c00
+9c00
+4c04
+f00a
+9c00
+6400
+0100
+0000
+6800
+0300
+0000
+0000
+
+
+
+
+typedef struct _ATOM_Tonga_VCE_State_Table {
+	UCHAR ucRevId;
+	UCHAR ucNumEntries;
+	ATOM_Tonga_VCE_State_Record entries[1];
+} ATOM_Tonga_VCE_State_Table;
+
+
+01
+06
+typedef struct _ATOM_Tonga_VCE_State_Record {
+	UCHAR  ucVCEClockIndex;	/*index into usVCEDependencyTableOffset of 'ATOM_Tonga_MM_Dependency_Table' type */
+	UCHAR  ucFlag;		/* 2 bits indicates memory p-states */
+	UCHAR  ucSCLKIndex;		/*index into ATOM_Tonga_SCLK_Dependency_Table */
+	UCHAR  ucMCLKIndex;		/*index into ATOM_Tonga_MCLK_Dependency_Table */
+} ATOM_Tonga_VCE_State_Record;
+
+
+06
+00
+02
+03
+
+00
+01
+02
+03
+
+00
+02
+01
+02
+
+01
+02
+01
+02
+
+00
+02
+01
+02
+
+01
+02
+01
+02
+
+
+typedef struct _ATOM_Tonga_PCIE_Table {
+	UCHAR ucRevId;
+	UCHAR ucNumEntries; 										/* Number of entries. */
+	ATOM_Tonga_PCIE_Record entries[1];							/* Dynamically allocate entries. */
+} ATOM_Tonga_PCIE_Table;
+
+
+00
+03
+typedef struct _ATOM_Tonga_PCIE_Record {
+	UCHAR ucPCIEGenSpeed;
+	UCHAR usPCIELaneWidth;
+	UCHAR ucReserved[2];
+} ATOM_Tonga_PCIE_Record;
+
+00
+01
+00
+00
+
+00
+01
+00
+00
+
+02
+10
+00
+00

@@ -3,7 +3,7 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ATOM_MASTER_COMMAND_TABLE extends AContainer implements IContainer {
+public class ATOM_MASTER_COMMAND_TABLE extends AContainer implements IContainer , AtomTable{
 	{
 	name = "ATOM_MASTER_COMMAND_TABLE";
 	description = "Command Table list conatiner";

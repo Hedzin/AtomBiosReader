@@ -73,4 +73,18 @@ public class ATOM_VOLTAGE_OBJECT_V3 extends AFantomContainer {
 			break;
 		}
 	}
+	@Override
+	public void fillSubListDescriptions() {
+		keyHeader.setName("VoltageObjectHeaderV3");
+		asGpioVoltageObj.setName("GpioVoltageObj");
+		asGpioVoltageObj.setDescription("VOLTAGE and GPIO Lookup table ->ATOM_GPIO_VOLTAGE_OBJECT_V3");
+		asI2cVoltageObj.setName("I2cVoltageObj");
+		asI2cVoltageObj.setDescription("VOLTAGE REGULATOR INIT sequece through I2C -> ATOM_I2C_VOLTAGE_OBJECT_V3");
+		asLeakageObj.setName("LeakageObj");
+		asLeakageObj.setDescription("voltage mode = 0x10/0x11/0x12");
+		asSVID2Obj.setName("SVID2Obj");
+		asSVID2Obj.setDescription("voltage mode = VOLTAGE_OBJ_SVID2");
+
+		super.fillSubListDescriptions();
+	}
 }

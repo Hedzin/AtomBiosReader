@@ -15,7 +15,9 @@ public void process() {
 	lenght = 0;
 	binDataBlock.getBody().position(0);
 	binDataBlock.getBody().limit(binDataBlock.getBody().capacity());
+	binDataBlock.getChildList().clear();
 	System.out.println("!!!!!!!!!!!!!!!!!BEFORE DYN MAIN RUN");
+	
 	super.process();
 	System.out.println("!!!!!!!!!!!!!!!!!AFTERRF DYN MAIN RUN");
 }
