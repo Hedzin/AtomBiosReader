@@ -3,7 +3,7 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ATOM_MASTER_DATA_TABLE extends AContainer implements IContainer,AtomTable {
+public class ATOM_MASTER_DATA_TABLE extends AContainer implements IContainer,IAtomTable {
 	{
 	name = "ATOM_MASTER_DATA_TABLE";
 	description = "Data Table list conatiner";

@@ -13,9 +13,12 @@ public abstract class AStructure implements IStructure {
 
 	@Override
 	public void setName(String name) {
-		System.out.println("namebef: "+this.name);
-		this.name = this.name+name;
-		System.out.println("nameaf: "+this.name);
+		//System.out.println("namebef: "+this.name);
+		if (!this.name.equals(name))this.name = this.name+name;
+		if (binDataBlock!=null&&binDataBlock.getLength()!=0){
+			binDataBlock.setName(name);
+		}
+		//System.out.println("nameaf: "+this.name);
 		
 	}
 	@Override
@@ -94,7 +97,7 @@ public abstract class AStructure implements IStructure {
 		for (IStructure structure : subStructureList) {
 			if (structure instanceof IFantomContainer) {
 
-				System.out.println("(structure instanceof IFantomContainer");
+				//System.out.println("(structure instanceof IFantomContainer");
 				IStructure keyStr = ((IFantomContainer) structure).getKeyStructure();
 				int keyStrLen = keyStr.getLength();
 				// System.out.println("keyStrLen: "+keyStrLen);
@@ -122,7 +125,7 @@ public abstract class AStructure implements IStructure {
 
 			ByteBuffer tBB = binDataBlock.getBody().duplicate();
 			int tLength = structure.getLength();
-			// System.out.println("AStructure process() tLength: "+tLength);
+			//System.out.println("AStructure process() tLength: "+structure.getName()+"  :"+tLength);
 			// System.out.println("AStructure process() position: "+position);
 			tBB.position(position);
 			ByteBuffer bb = tBB.slice();
@@ -134,26 +137,28 @@ public abstract class AStructure implements IStructure {
 			bdb.setLength(tLength);
 			bdb.setOffset(position);
 			bdb.setType(structure.getClass().getName());
-			position += tLength;
+			
 			structure.setBinaryDataBlock(bdb);
 			binDataBlock.getChildList().add(bdb);
 			//System.out.println(bdb.getName());
 			//bdb.printHexString();
 			structure.init();
-
+			tLength = structure.getLength();
+			position += tLength;
+			bdb.setLength(tLength);
 		}
 
 	}
 
 	@Override
 	public void setBinaryDataBlock(BinaryDataBlock bdb) {
-		System.out.println("namebef: "+name);
+		//System.out.println("namebef: "+name);
 	
 		
 		this.binDataBlock = bdb;
 		this.binDataBlock.setName(getName());
 		this.binDataBlock.setComment(getDescription());
-		System.out.println("nameaf: "+name);
+		//System.out.println("nameaf: "+name);
 		
 	}
 

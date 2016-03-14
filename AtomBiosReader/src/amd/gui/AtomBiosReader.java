@@ -2,6 +2,7 @@ package amd.gui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import amd.gui.model.BiosTable;
@@ -9,6 +10,7 @@ import amd.gui.view.BiosParseResultOverviewController;
 import amd.gui.view.RootLayoutController;
 import backend.ATOM_BIOS;
 import backend.AtomBiosReaderCLI;
+import backend.IAtomTable;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,13 +97,11 @@ public class AtomBiosReader extends Application {
 			
 			atomBios = AtomBiosReaderCLI.parse(file);
 			biosTables.clear();
-			
-			BiosTable romHeader = new BiosTable(atomBios.atomRomHeader.getBinaryDataBlock());
-			biosTables.add(romHeader);
-			biosTables.add( new BiosTable(atomBios.atomMasterDataTable.getBinaryDataBlock()));
-			biosTables.add( new BiosTable(atomBios.atomMasterCommandTable.getBinaryDataBlock()));
-			biosTables.add( new BiosTable(atomBios.atomVoltageObjectInfoTable.getBinaryDataBlock()));
-			
+			List<IAtomTable> tableList = atomBios.tableList;
+			for (IAtomTable atomTable : tableList) {
+				biosTables.add(new BiosTable(atomTable.getBinaryDataBlock()));
+			}
+
 			
 		} catch (Exception e) { // catches ANY exception
 			e.printStackTrace();

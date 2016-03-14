@@ -5,10 +5,10 @@ import java.util.List;
 
 public class ATOM_POWERPLAY_INFO_HEADER_V7_1 extends AContainer{
 	ByteStructure  ucTableRevision =  new ByteStructure();
-	ByteStructure usTableSize =  new ByteStructure();
-	ShortStructure	ulGoldenPPID =  new ShortStructure();
+	ShortStructure usTableSize =  new ShortStructure();
+	LongStructure	ulGoldenPPID =  new LongStructure();
 	LongStructure	ulGoldenRevision =  new LongStructure();
-	ByteStructure	usFormatID =  new ByteStructure();
+	ShortStructure	usFormatID =  new ShortStructure();
 
 	ShortStructure	usVoltageTime =  new ShortStructure();				 /*in microseconds */
 

@@ -19,10 +19,10 @@ public class ATOM_BIOS {
 	public ATOM_MASTER_DATA_TABLE atomMasterDataTable = new ATOM_MASTER_DATA_TABLE();
 	public ATOM_MASTER_COMMAND_TABLE atomMasterCommandTable = new ATOM_MASTER_COMMAND_TABLE();
 	
-	public List<AtomTable> tableList = new ArrayList<AtomTable>();
+	public List<IAtomTable> tableList = new ArrayList<IAtomTable>();
 	//
-	public ATOM_VOLTAGE_OBJECT_INFO_V3_1 atomVoltageObjectInfoTable = new ATOM_VOLTAGE_OBJECT_INFO_V3_1();
-	
+	public ATOM_VOLTAGE_OBJECT_INFO_V3_1 atomVoltageObjectInfoTable_v3_1;
+	public ATOM_POWERPLAY_INFO_V7_1 atomPPtable;
 	public ATOM_BIOS(BinaryDataBlock mainBDB) {
 		this.mainBDB = mainBDB;
 
@@ -48,20 +48,103 @@ public class ATOM_BIOS {
 		atomMasterDataTable.init();
 		atomMasterCommandTable.setBinaryDataBlock(getTableBDBbyOffset(atomRomHeader.usMasterCommandTableOffset.getBinaryDataBlock().getIntegerLE()));
 		atomMasterCommandTable.init();
-		atomVoltageObjectInfoTable.setBinaryDataBlock(getTableBDBbyOffset(atomMasterDataTable.ListOfDataTables.VoltageObjectInfo.getBinaryDataBlock().getIntegerLE()));
-		atomVoltageObjectInfoTable.init();
 		
-		ATOM_COMMON_TABLE_HEADER PowerPlayInfoHeader = getCommonTableHeaderByOffset(atomMasterDataTable.ListOfDataTables.PowerPlayInfo.getBinaryDataBlock().getIntegerLE());
-		System.out.println(PowerPlayInfoHeader.ucTableContentRevision.getBinaryDataBlock().getIntegerLE() + " "+PowerPlayInfoHeader.ucTableFormatRevision.getBinaryDataBlock().getIntegerLE());
+		tableList.add(atomRomHeader);
+		tableList.add(atomMasterDataTable);
+		tableList.add(atomMasterCommandTable);
 		
-		Path path = Paths.get("ppt.txt");
-		try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-		    writer.write(getTableBDBbyOffset(atomMasterDataTable.ListOfDataTables.PowerPlayInfo.getBinaryDataBlock().getIntegerLE()).getHexString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//		atomVoltageObjectInfoTable_v3_1.setBinaryDataBlock(getTableBDBbyOffset(atomMasterDataTable.ListOfDataTables.VoltageObjectInfo.getBinaryDataBlock().getIntegerLE()));
+//		atomVoltageObjectInfoTable_v3_1.init();
+//		atomPPtable.setBinaryDataBlock(getTableBDBbyOffset(atomMasterDataTable.ListOfDataTables.PowerPlayInfo.getBinaryDataBlock().getIntegerLE()));
+//		atomPPtable.init();
+		fillTables();
+		//ATOM_COMMON_TABLE_HEADER PowerPlayInfoHeader = getCommonTableHeaderByOffset(atomMasterDataTable.ListOfDataTables.PowerPlayInfo.getBinaryDataBlock().getIntegerLE());
+		//System.out.println(PowerPlayInfoHeader.ucTableContentRevision.getBinaryDataBlock().getIntegerLE() + " "+PowerPlayInfoHeader.ucTableFormatRevision.getBinaryDataBlock().getIntegerLE());
+		
+//		Path path = Paths.get("ppt.txt");
+//		try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+//		    writer.write(getTableBDBbyOffset(atomMasterDataTable.ListOfDataTables.PowerPlayInfo.getBinaryDataBlock().getIntegerLE()).getHexString());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+	}
+	private void fillTables(){
+		for (IStructure atomTable : atomMasterDataTable.ListOfDataTables.getSubStructureList()) {
+			int offset = atomTable.getBinaryDataBlock().getIntegerLE();
+			if (offset==0)continue;
+			String tablename = atomTable.getName();
+			ATOM_COMMON_TABLE_HEADER tableheader = getCommonTableHeaderByOffset(offset);
+			int tableContentRevision = tableheader.ucTableContentRevision.getBinaryDataBlock().getIntegerLE();
+			int tableFormatRevision = tableheader.ucTableFormatRevision.getBinaryDataBlock().getIntegerLE();
+			String tableVersion = "v"+tableFormatRevision+"."+tableContentRevision;
+			System.out.println(tablename+" "+tableVersion);
+			switch (tablename) {
+			case "VoltageObjectInfo":
+				switch (tableVersion) {
+				case "v3.1":
+					tableList.add(new ATOM_VOLTAGE_OBJECT_INFO_V3_1(getTableBDBbyOffset(offset)));
+					break;
+
+				default:
+					tableList.add(makeStubTable(atomTable));
+					break;
+				}
+				break;
+			case "PowerPlayInfo":
+				switch (tableVersion) {
+				case "v7.1":
+					tableList.add(new ATOM_POWERPLAY_INFO_V7_1(getTableBDBbyOffset(offset)));
+					break;
+
+				default:
+					Path path = Paths.get("ppt"+tableVersion+".txt");
+					try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+					    writer.write(getTableBDBbyOffset(offset).getHexString());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					tableList.add(makeStubTable(atomTable));
+					break;
+				}
+				break;
+			default:
+				tableList.add(makeStubTable(atomTable));
+				break;
+			}
 		}
 		
+		for (IStructure atomTable : atomMasterCommandTable.ListOfCommandTables.getSubStructureList()) {
+			if (atomTable.getBinaryDataBlock().getIntegerLE()==0)continue;
+			String tablename = atomTable.getName();
+			ATOM_COMMON_TABLE_HEADER tableheader = getCommonTableHeaderByOffset(atomTable.getBinaryDataBlock().getIntegerLE());
+			int tableContentRevision = tableheader.ucTableContentRevision.getBinaryDataBlock().getIntegerLE();
+			int tableFormatRevision = tableheader.ucTableFormatRevision.getBinaryDataBlock().getIntegerLE();
+			String tableVersion = "v"+tableContentRevision+"."+tableFormatRevision;
+			System.out.println(tablename+" "+tableVersion);
+			switch (tablename) {
+			default:
+				tableList.add(makeStubTable(atomTable));
+				break;
+			}
+		}
+		
+	}
+	
+	private IAtomTable makeStubTable(IStructure atomTable) {
+		int offset = atomTable.getBinaryDataBlock().getIntegerLE();
+		ATOM_STUB_TABLE stubTable = new ATOM_STUB_TABLE(getTableBDBbyOffset(offset));
+		String tablename = atomTable.getName();
+		ATOM_COMMON_TABLE_HEADER tableheader = getCommonTableHeaderByOffset(offset);
+		int tableContentRevision = tableheader.ucTableContentRevision.getBinaryDataBlock().getIntegerLE();
+		int tableFormatRevision = tableheader.ucTableFormatRevision.getBinaryDataBlock().getIntegerLE();
+		String tableVersion = "v"+tableFormatRevision+"."+tableContentRevision;
+		stubTable.setName("(UNSUPPORTED)"+tablename+" "+tableVersion);
+		stubTable.setDescription("not supported yet");
+		return stubTable;
 	}
 	private ATOM_COMMON_TABLE_HEADER getCommonTableHeaderByOffset(int offset){
 		ATOM_COMMON_TABLE_HEADER header = new ATOM_COMMON_TABLE_HEADER();

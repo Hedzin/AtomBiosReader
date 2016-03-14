@@ -144,8 +144,8 @@ public class AtomBiosReaderCLI {
 		voltageObjectInfoBB.setOffsetHexString(offset);
 		voltageObjectInfoBB.setName("VoltageObjectInfo");
 		
-		ATOM_VOLTAGE_OBJECT_INFO_V3_1 voltageObjectInfoS = new ATOM_VOLTAGE_OBJECT_INFO_V3_1();
-		binaryDataBlockPrinter(voltageObjectInfoS.getBinaryDataBlock());
+//		ATOM_VOLTAGE_OBJECT_INFO_V3_1 voltageObjectInfoS = new ATOM_VOLTAGE_OBJECT_INFO_V3_1();
+//		binaryDataBlockPrinter(voltageObjectInfoS.getBinaryDataBlock());
 		
 		
 	}

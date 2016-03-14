@@ -3,7 +3,7 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ATOM_ROM_HEADER extends AContainer implements IContainer,AtomTable {
+public class ATOM_ROM_HEADER extends AContainer implements IContainer,IAtomTable {
 	{
 	name = "ATOM_ROM_HEADER";
 	description = "ROM header";

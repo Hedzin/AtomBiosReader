@@ -2,7 +2,7 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ATOM_POWERPLAY_INFO_V7_1  extends AContainer implements IContainer ,AtomTable{
+public class ATOM_POWERPLAY_INFO_V7_1  extends AtomTable{
 	{
 	name = "ATOM_POWERPLAY_INFO_V7_1";
 	description = "PowerPlay Info Table";
@@ -14,6 +14,12 @@ public class ATOM_POWERPLAY_INFO_V7_1  extends AContainer implements IContainer 
 	 ATOM_POWERPLAY_INFO_OBJECT_V7_1 ppObject = new ATOM_POWERPLAY_INFO_OBJECT_V7_1();
 	 StructureType type = StructureType.subFixed;
 	 
+
+	public ATOM_POWERPLAY_INFO_V7_1(BinaryDataBlock bdb) {
+		setBinaryDataBlock(bdb);
+		init();
+	}
+
 	@Override
 	public List<IStructure> getSubStructureList() {
 		List<IStructure> list = new  ArrayList<IStructure>();
@@ -25,8 +31,9 @@ public class ATOM_POWERPLAY_INFO_V7_1  extends AContainer implements IContainer 
 	
 	@Override
 	public void fillSubListDescriptions() {
+		System.out.println(sHeader);
 		sHeader.setName("CommonTableHeader");
-		ppObject.setName("ppObject");
+		ppObject.setName("ATOM_POWERPLAY_INFO_OBJECT_V7_1");
 		ppObject.setDescription("powerplay object");
 		super.fillSubListDescriptions();
 	}

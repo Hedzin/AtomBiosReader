@@ -115,7 +115,7 @@ public class BiosParseResultOverviewController {
 			 tablecontent.setRoot(root);
 			 tablecontent.getColumns().setAll(bdbName,bdbFullOffset,bdbTableOffset,bdbSize,bdbHexValue,bdbType,bdbValue);
 			 bdbName.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getName()));
-			 bdbFullOffset.setCellValueFactory(param -> new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getOffset())));
+			 bdbFullOffset.setCellValueFactory(param -> new ReadOnlyStringWrapper(Integer.toHexString(param.getValue().getValue().getBody().arrayOffset())+"("+String.valueOf(param.getValue().getValue().getBody().arrayOffset())+")"));
 			 bdbTableOffset.setCellValueFactory(param -> new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getOffset())));
 			 bdbSize.setCellValueFactory(param -> new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getLength())));
 			 bdbHexValue.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getHexString()));

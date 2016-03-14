@@ -45,14 +45,14 @@ public class BinaryDataBlock {
 		case 4:
 				return body.order(ByteOrder.LITTLE_ENDIAN).getInt();
 		default:
-			try {
-				throw new Exception("unexpexted lenght:"+length);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				System.out.println(this.getName());
-				e.printStackTrace();
-			}
-			break;
+//			try {
+//				throw new Exception("unexpexted lenght:"+length);
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				System.out.println(this.getName());
+//				e.printStackTrace();
+//			}
+			return -1;
 		}
 		return 0;
 	}
@@ -60,6 +60,8 @@ public class BinaryDataBlock {
 		
 		return offset;
 	}
+	
+	
 	public void setOffset(int offset) {
 		this.offset = offset;
 	}

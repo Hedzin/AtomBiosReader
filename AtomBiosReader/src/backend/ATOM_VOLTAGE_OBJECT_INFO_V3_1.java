@@ -2,7 +2,13 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ATOM_VOLTAGE_OBJECT_INFO_V3_1  extends AContainer implements IContainer ,AtomTable{
+public class ATOM_VOLTAGE_OBJECT_INFO_V3_1  extends AtomTable{
+	
+	public ATOM_VOLTAGE_OBJECT_INFO_V3_1(BinaryDataBlock bdb) {
+		setBinaryDataBlock(bdb);
+		init();
+	}
+
 	{
 	name = "ATOM_VOLTAGE_OBJECT_INFO_V3_1";
 	description = "Voltage Object Info Table";
