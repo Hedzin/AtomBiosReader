@@ -23,9 +23,9 @@
       USHORT usBackbiasTime;    // in microseconds
       USHORT usVoltageTime;     // in microseconds
       USHORT usTableSize;       //the size of this structure, or the extended structure
-5800
-6000
-7d00
+5800  (88)usStateArrayOffset;
+6000	(96)usClockInfoArrayOffset;
+7d00	(125)usNonClockInfoArrayOffset;
 6b03
 e803
 5800
@@ -109,7 +109,7 @@ typedef struct _ATOM_PPLIB_POWERPLAYTABLE5
 00000000
 3200
 0000
-*********88
+*********88 (88)usStateArrayOffset;
 typedef struct _StateArray{
     //how many states we have 
     UCHAR ucNumEntries;
@@ -141,11 +141,11 @@ typedef struct _ATOM_PPLIB_STATE_V2
 
 
 00 ----&
-******96
+******96 (96)usClockInfoArrayOffset;
 
 03
 09
-888a01f0
+888a01f0 (98)usBootClockInfoOffset;
 49020210
 00382b01
 f0490220
@@ -153,7 +153,7 @@ f0490220
 00983a00
 000100
 
-******125
+******125 (125)usNonClockInfoArrayOffset;
 02
 18
 typedef struct _ATOM_PPLIB_NONCLOCK_INFO
@@ -168,7 +168,7 @@ typedef struct _ATOM_PPLIB_NONCLOCK_INFO
       ULONG  ulDCLK;
       UCHAR  ucUnused[5];
 } ATOM_PPLIB_NONCLOCK_INFO;
-
+(127)usBootNonClockInfoOffset
 0800
 00
 00
@@ -189,7 +189,7 @@ typedef struct _ATOM_PPLIB_NONCLOCK_INFO
 00000000
 00000000
 
-******175
+******175 CustomThermalPolicyArrayOffset  usFanTableOffset
 
 typedef struct _ATOM_PPLIB_FANTABLE
 {
@@ -216,5 +216,465 @@ typedef struct _ATOM_PPLIB_FANTABLE2
     USHORT  usTMax;                          // The max temperature
 } ATOM_PPLIB_FANTABLE2;
 27f0
+(****190)
+2300
+2800
+e412
+9808
+0000
+0000
+0000
+0000
+*******(206) usExtendendedHeaderOffset
 
-23002800e412980800000000000000001a00f0490200400d03007a01de01230200004d0277020000000008307500e80350c30002ffa8100103ff284f0104ff2c5f0105ff3c6d0106ff847a0107ff888a0108ff01f049021a0408983a00e803983a0002ff983a0003fff0490204fff0490205fff0490206fff0490207fff0490208ff08c803c803c803cf03dc03dc03e803f403ee034c041a040e04780446043904a40471046504d6049d048b040105c204b60401e803307500983a00000a8cb9008cb900d8d600d8d60024f40024f400701101701101f82401f82401803801803801084c01084c01709400709400c0da00c0da00a86100a8610008e8030002ff0003ff0104ff0205ff0306ff0407ff0508ff0606030101010701080109010101000714cd007c920024f4008cb900341b019ce000444201ac0701cc5501f82401546901444201dc7c01905f0108e8030002ff0003ff0104ff0205ff0306ff0407ff0508ff060008e803c8af0002ffc8af0003ff14cd0004ff24f40005ff341b0106ffbc2e0107ff084c0108ff905f010008e803d8d60002ffd8d60003ffe8fd0004fff8240105ff084c0106ff905f0107ff18730108ffdc7c0101d000d700cc00000000003408480dd7005f00000000000000000000000000
+typedef struct _ATOM_PPLIB_EXTENDEDHEADER
+{
+    USHORT  usSize;
+    ULONG   ulMaxEngineClock;   // For Overdrive.
+    ULONG   ulMaxMemoryClock;   // For Overdrive.
+    // Add extra system parameters here, always adjust size to include all fields.
+    USHORT  usVCETableOffset; //points to ATOM_PPLIB_VCE_Table
+    USHORT  usUVDTableOffset;   //points to ATOM_PPLIB_UVD_Table
+    USHORT  usSAMUTableOffset;  //points to ATOM_PPLIB_SAMU_Table
+    USHORT  usPPMTableOffset;   //points to ATOM_PPLIB_PPM_Table
+    USHORT  usACPTableOffset;  //points to ATOM_PPLIB_ACP_Table   
+    /* points to ATOM_PPLIB_POWERTUNE_Table */
+    USHORT  usPowerTuneTableOffset;
+    /* points to ATOM_PPLIB_CLOCK_Voltage_Dependency_Table for sclkVddgfxTable */
+    USHORT  usSclkVddgfxTableOffset;
+} ATOM_PPLIB_EXTENDEDHEADER;
+1a00
+f0490200
+400d0300
+7a01 usVCETableOffset; //points to ATOM_PPLIB_VCE_Table
+de01 usUVDTableOffset;   //points to ATOM_PPLIB_UVD_Table
+2302 usSAMUTableOffset;  //points to ATOM_PPLIB_SAMU_Table
+0000 usPPMTableOffset;   //points to ATOM_PPLIB_PPM_Table
+4d02 usACPTableOffset;  //points to ATOM_PPLIB_ACP_Table   
+7702 usPowerTuneTableOffset;
+0000 usSclkVddgfxTableOffset;
+0000
+
+******(206+26)232 usVddcDependencyOnSCLKOffset;
+
+typedef struct _ATOM_PPLIB_Clock_Voltage_Dependency_Table
+{
+    UCHAR ucNumEntries;                                                // Number of entries.
+    ATOM_PPLIB_Clock_Voltage_Dependency_Record entries[1];             // Dynamically allocate entries.
+}ATOM_PPLIB_Clock_Voltage_Dependency_Table;
+
+
+08
+typedef struct _ATOM_PPLIB_Clock_Voltage_Dependency_Record
+{
+    USHORT usClockLow;
+    UCHAR  ucClockHigh;
+    USHORT usVoltage;
+}ATOM_PPLIB_Clock_Voltage_Dependency_Record;
+3075
+00
+e803
+
+50c3
+00
+02ff
+
+a810
+01
+03ff
+
+284f
+01
+04ff
+
+2c5f
+01
+05ff
+
+3c6d
+01
+06ff
+
+847a
+01
+07ff
+
+888a
+01
+08ff
+*****(273) usVddciDependencyOnMCLKOffset
+typedef struct _ATOM_PPLIB_Clock_Voltage_Dependency_Record
+{
+    USHORT usClockLow;
+    UCHAR  ucClockHigh;
+    USHORT usVoltage;
+}ATOM_PPLIB_Clock_Voltage_Dependency_Record;
+01
+f049
+02
+1a04
+
+
+
+*****(279) usVddcDependencyOnMCLKOffset
+typedef struct _ATOM_PPLIB_Clock_Voltage_Dependency_Table
+{
+    UCHAR ucNumEntries;                                                // Number of entries.
+    ATOM_PPLIB_Clock_Voltage_Dependency_Record entries[1];             // Dynamically allocate entries.
+}ATOM_PPLIB_Clock_Voltage_Dependency_Table;
+08
+
+typedef struct _ATOM_PPLIB_Clock_Voltage_Dependency_Record
+{
+    USHORT usClockLow;
+    UCHAR  ucClockHigh;
+    USHORT usVoltage;
+}ATOM_PPLIB_Clock_Voltage_Dependency_Record;
+983a
+00
+e803
+
+983a
+00
+02ff
+
+983a
+00
+03ff
+
+f049
+02
+04ff
+
+f049
+02
+05ff
+
+f049
+02
+06ff
+
+f049
+02
+07ff
+
+f049
+02
+08ff
+******(320) usCACLeakageTableOffset;         // Points to ATOM_PPLIB_CAC_Leakage_Table
+typedef struct _ATOM_PPLIB_CAC_Leakage_Table
+{
+    UCHAR ucNumEntries;                                                 // Number of entries.
+    ATOM_PPLIB_CAC_Leakage_Record entries[1];                           // Dynamically allocate entries.
+}ATOM_PPLIB_CAC_Leakage_Table;
+
+08
+union _ATOM_PPLIB_CAC_Leakage_Record
+{
+    struct
+    {
+        USHORT usVddc;          // We use this field for the "fake" standardized VDDC for power calculations; For CI and newer, we use this as the real VDDC value. in CI we read it as StdVoltageHiSidd
+        ULONG  ulLeakageValue;  // For CI and newer we use this as the "fake" standar VDDC value. in CI we read it as StdVoltageLoSidd
+
+    };
+    struct
+     {
+        USHORT usVddc1;
+        USHORT usVddc2;
+        USHORT usVddc3;
+     };
+};
+
+typedef union _ATOM_PPLIB_CAC_Leakage_Record ATOM_PPLIB_CAC_Leakage_Record;
+
+c803
+c803
+c803
+
+cf03
+dc03
+dc03
+
+e803
+f403
+ee03
+
+4c04
+1a04
+0e04
+
+7804
+4604
+3904
+
+a404
+7104
+6504
+
+d604
+9d04
+8b04
+
+0105
+c204
+b604
+******(369)
+usVddcPhaseShedLimitsTableOffset;    // Points to ATOM_PPLIB_PhaseSheddingLimits_Table
+
+typedef struct _ATOM_PPLIB_PhaseSheddingLimits_Table
+{
+    UCHAR ucNumEntries;                                                 // Number of entries.
+    ATOM_PPLIB_PhaseSheddingLimits_Record entries[1];                   // Dynamically allocate entries.
+}ATOM_PPLIB_PhaseSheddingLimits_Table;
+01
+
+typedef struct _ATOM_PPLIB_PhaseSheddingLimits_Record
+{
+    USHORT usVoltage;
+    USHORT usSclkLow;
+    UCHAR  ucSclkHigh;
+    USHORT usMclkLow;
+    UCHAR  ucMclkHigh;
+}ATOM_PPLIB_PhaseSheddingLimits_Record;
+e803
+3075
+00
+983a
+00
+*****378) usVCETableOffset; //points to ATOM_PPLIB_VCE_Table
+typedef struct _ATOM_PPLIB_VCE_Table
+{
+      UCHAR revid;
+//    VCEClockInfoArray array;
+//    ATOM_PPLIB_VCE_Clock_Voltage_Limit_Table limits;
+//    ATOM_PPLIB_VCE_State_Table states;
+}ATOM_PPLIB_VCE_Table;
+
+00
+typedef struct _VCEClockInfoArray{
+    UCHAR ucNumEntries;
+    VCEClockInfo entries[1];
+}VCEClockInfoArray;
+0a
+typedef struct _VCEClockInfo{
+    USHORT usEVClkLow;
+    UCHAR  ucEVClkHigh;
+    USHORT usECClkLow;
+    UCHAR  ucECClkHigh;
+}VCEClockInfo;
+8cb9
+00
+8cb9
+00
+
+d8d6
+00
+d8d6
+00
+
+24f4
+00
+24f4
+00
+
+7011
+01
+7011
+01
+
+f82401f82401
+803801803801
+084c01084c01
+709400709400
+c0da00c0da00
+a86100a86100
+**********440
+typedef struct _ATOM_PPLIB_VCE_Clock_Voltage_Limit_Table
+{
+    UCHAR numEntries;
+    ATOM_PPLIB_VCE_Clock_Voltage_Limit_Record entries[1];
+}ATOM_PPLIB_VCE_Clock_Voltage_Limit_Table;
+08
+typedef struct _ATOM_PPLIB_VCE_Clock_Voltage_Limit_Record
+{
+    USHORT usVoltage;
+    UCHAR  ucVCEClockInfoIndex;
+}ATOM_PPLIB_VCE_Clock_Voltage_Limit_Record;
+e803
+00
+
+02ff
+00
+03ff
+01
+04ff
+02
+05ff
+03
+06ff
+04
+07ff
+05
+08ff
+06
+typedef struct _ATOM_PPLIB_VCE_State_Table
+{
+    UCHAR numEntries;
+    ATOM_PPLIB_VCE_State_Record entries[1];
+}ATOM_PPLIB_VCE_State_Table;
+06
+typedef struct _ATOM_PPLIB_VCE_State_Record
+{
+    UCHAR  ucVCEClockInfoIndex;
+    UCHAR  ucClockInfoIndex; //highest 2 bits indicates memory p-states, lower 6bits indicates index to ClockInfoArrary
+}ATOM_PPLIB_VCE_State_Record;
+03
+01
+
+01
+01
+
+07
+01
+
+08
+01
+
+09
+01
+
+01
+01
+
+******478 usUVDTableOffset;   //points to ATOM_PPLIB_UVD_Table
+
+typedef struct _ATOM_PPLIB_UVD_Table
+{
+      UCHAR revid;
+//    UVDClockInfoArray array;
+//    ATOM_PPLIB_UVD_Clock_Voltage_Limit_Table limits;
+}ATOM_PPLIB_UVD_Table;
+00
+typedef struct _UVDClockInfoArray{
+    UCHAR ucNumEntries;
+    UVDClockInfo entries[1];
+}UVDClockInfoArray;
+07
+typedef struct _UVDClockInfo{
+    USHORT usVClkLow;
+    UCHAR  ucVClkHigh;
+    USHORT usDClkLow;
+    UCHAR  ucDClkHigh;
+}UVDClockInfo;
+14cd007c9200
+24f4008cb900
+341b019ce000
+444201ac0701
+cc5501f82401
+546901444201
+dc7c01905f01
+typedef struct _ATOM_PPLIB_UVD_Clock_Voltage_Limit_Table
+{
+    UCHAR numEntries;
+    ATOM_PPLIB_UVD_Clock_Voltage_Limit_Record entries[1];
+}ATOM_PPLIB_UVD_Clock_Voltage_Limit_Table;
+08
+typedef struct _ATOM_PPLIB_UVD_Clock_Voltage_Limit_Record
+{
+    USHORT usVoltage;
+    UCHAR  ucUVDClockInfoIndex;
+}ATOM_PPLIB_UVD_Clock_Voltage_Limit_Record;
+e80300
+02ff00
+03ff01
+04ff02
+05ff03
+06ff04
+07ff05
+08ff06
+**********589 usACPTableOffset;  //points to ATOM_PPLIB_ACP_Table  
+
+typedef struct _ATOM_PPLIB_ACP_Table
+{
+      UCHAR revid;
+      ATOM_PPLIB_ACPClk_Voltage_Limit_Table limits;
+}ATOM_PPLIB_ACP_Table;
+
+00
+typedef struct _ATOM_PPLIB_ACPClk_Voltage_Limit_Table{
+    UCHAR numEntries;
+    ATOM_PPLIB_ACPClk_Voltage_Limit_Record entries[1];
+}ATOM_PPLIB_ACPClk_Voltage_Limit_Table;
+08
+typedef struct _ATOM_PPLIB_ACPClk_Voltage_Limit_Record
+{
+      USHORT usVoltage;
+      USHORT usACPClockLow;
+      UCHAR  ucACPClockHigh;
+}ATOM_PPLIB_ACPClk_Voltage_Limit_Record;
+e803c8af00
+02ffc8af00
+03ff14cd00
+04ff24f400
+05ff341b01
+06ffbc2e01
+07ff084c01
+08ff905f01
+*-******631   usPowerTuneTableOffset
+
+typedef struct _ATOM_PPLIB_POWERTUNE_Table
+{
+      UCHAR revid;
+      ATOM_PowerTune_Table power_tune_table;
+}ATOM_PPLIB_POWERTUNE_Table;
+
+typedef struct _ATOM_PPLIB_POWERTUNE_Table_V1
+{
+      UCHAR revid;
+      ATOM_PowerTune_Table power_tune_table;
+      USHORT usMaximumPowerDeliveryLimit;
+      USHORT usTjMax;
+      USHORT usReserve[6];
+} ATOM_PPLIB_POWERTUNE_Table_V1;
+
+
+00
+
+typedef struct _ATOM_PowerTune_Table{
+    USHORT usTDP;
+    USHORT usConfigurableTDP;
+    USHORT usTDC;
+    USHORT usBatteryPowerLimit;
+    USHORT usSmallPowerLimit;
+    USHORT usLowCACLeakage;
+    USHORT usHighCACLeakage;
+}ATOM_PowerTune_Table;
+
+08
+e803
+d8d60002ff
+d8d60003ff
+e8fd0004ff
+f8240105ff
+084c0106ff
+905f0107ff
+18730108ff
+
+dc7c0101
+
+d000
+d700
+cc00
+0000
+0000
+3408
+480d
+
+d700
+5f00
+0000
+0000
+0000
+0000
+0000
+0000
