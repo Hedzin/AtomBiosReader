@@ -142,18 +142,54 @@ typedef struct _ATOM_PPLIB_STATE_V2
 
 00 ----&
 ******96 (96)usClockInfoArrayOffset;
-
+typedef struct _ClockInfoArray{
+    //how many clock levels we have
+    UCHAR ucNumEntries;
+    
+    //sizeof(ATOM_PPLIB_CLOCK_INFO)
+    UCHAR ucEntrySize;
+    
+    UCHAR clockInfo[1];
+}ClockInfoArray;
 03
 09
-888a01f0 (98)usBootClockInfoOffset;
-49020210
-00382b01
-f0490220
-10003075
-00983a00
-000100
+(98)usBootClockInfoOffset;
+typedef struct _ATOM_PPLIB_CI_CLOCK_INFO
+{
+      USHORT usEngineClockLow;
+      UCHAR  ucEngineClockHigh;
+
+      USHORT usMemoryClockLow;
+      UCHAR  ucMemoryClockHigh;
+      
+      UCHAR  ucPCIEGen;
+      USHORT usPCIELane;
+} ATOM_PPLIB_CI_CLOCK_INFO;
+888a01
+f04902
+02
+1000
+
+382b01
+f04902
+20
+1000
+
+307500
+983a00
+00
+0100
 
 ******125 (125)usNonClockInfoArrayOffset;
+typedef struct _NonClockInfoArray{
+
+    //how many non-clock levels we have. normally should be same as number of states
+    UCHAR ucNumEntries;
+    //sizeof(ATOM_PPLIB_NONCLOCK_INFO)
+    UCHAR ucEntrySize;
+    
+    ATOM_PPLIB_NONCLOCK_INFO nonClockInfo[1];
+}NonClockInfoArray;
 02
 18
 typedef struct _ATOM_PPLIB_NONCLOCK_INFO

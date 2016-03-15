@@ -58,8 +58,8 @@ public class BinaryDataBlock {
 		return 0;
 	}
 	public int getOffset() {
-		System.out.println("getBody().arrayOffset()"+getBody().arrayOffset());
-		System.out.println("rootOffset"+rootOffset);
+		//System.out.println("getBody().arrayOffset()"+getBody().arrayOffset());
+		//System.out.println("rootOffset"+rootOffset);
 		return getBody().arrayOffset()-rootOffset;
 		//return offset;
 	}

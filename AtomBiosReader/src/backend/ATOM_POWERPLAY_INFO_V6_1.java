@@ -38,4 +38,5 @@ public class ATOM_POWERPLAY_INFO_V6_1  extends AtomTable{
 		super.fillSubListDescriptions();
 	}
 
+
 }

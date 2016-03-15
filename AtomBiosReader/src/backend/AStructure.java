@@ -7,7 +7,17 @@ import java.util.List;
 public abstract class AStructure implements IStructure {
 	int lenght = 0;
 	boolean offsetBased = false;
+	public boolean isOffsetBased(){
+		return offsetBased;
+	}
 	int offsetPosition = 0;
+	public int getOffsetPosition() {
+		return offsetPosition;
+	}
+	public void setOffsetPosition(int offsetPosition) {
+		this.offsetPosition = offsetPosition;
+	}
+
 	String name = "";
 	String description= "";
 	List<IStructure> subStructureList = new ArrayList<IStructure>();
@@ -120,12 +130,12 @@ public abstract class AStructure implements IStructure {
 			bdb.setRootOffset(binDataBlock.getRootOffset());
 			int tLength = structure.getLength();
 			ByteBuffer tBB = binDataBlock.getBody().duplicate();
-			if(offsetBased){
+			if(structure.isOffsetBased()){
 				System.out.println(offsetPosition);
 				System.out.println(tBB.position());
 				System.out.println(tBB.limit());
 				tBB.limit(tBB.capacity());
-				tBB.position(offsetPosition);
+				tBB.position(structure.getOffsetPosition());
 			}else{
 
 				tBB.position(position);

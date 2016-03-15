@@ -13,57 +13,39 @@ import java.util.stream.Stream;
 public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 	ATOM_POWERPLAY_INFO_HEADER_V5 ppInfoHeader = new ATOM_POWERPLAY_INFO_HEADER_V5();
 	ATOM_POWERPLAY_STATE_TABLE_V6 ppState = new ATOM_POWERPLAY_STATE_TABLE_V6();
+	ATOM_POWERPLAY_CLOCK_INFO_TABLE ppClockInfo = new ATOM_POWERPLAY_CLOCK_INFO_TABLE();
+	ATOM_POWERPLAY_NONCLOCK_INFO_TABLE ppNonClockInfo = new ATOM_POWERPLAY_NONCLOCK_INFO_TABLE();
+	
 	@Override
 	public List<IStructure> getSubStructureList() {
 		List<IStructure> list = new  ArrayList<IStructure>();
 		list.add(ppInfoHeader);
 		if(ppInfoHeader.getBinaryDataBlock()!=null){
-			HashMap<IStructure, Integer> map = new HashMap<IStructure, Integer>();
-			
-			/*
-		    usClockInfoArrayOffset  // offset from start of this table to array of ASIC-specific structures,currently ATOM_PPLIB_CLOCK_INFO.
-		    usNonClockInfoArrayOffset // offset from start of this table to array of ATOM_PPLIB_NONCLOCK_INFO
-		    usBootClockInfoOffset 
-		    usBootNonClockInfoOffset 
-			*/
-			
-			int usStateArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usStateArrayOffset.getBinaryDataBlock().getIntegerLE();  //"points to ATOM_Tonga_State_Array");
 			ppState.offsetBased =  true;
-			ppState.offsetPosition = usStateArrayOffset;
+			ppClockInfo.offsetBased =  true;
+			ppNonClockInfo.offsetBased =  true;
+			int usStateArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usStateArrayOffset.getBinaryDataBlock().getIntegerLE();
+			int usClockInfoArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usClockInfoArrayOffset.getBinaryDataBlock().getIntegerLE();
+			int usNonClockInfoArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usNonClockInfoArrayOffset.getBinaryDataBlock().getIntegerLE();
+	
+			int usCustomThermalPolicyArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.usCustomThermalPolicyArrayOffset.getBinaryDataBlock().getIntegerLE();
+			int usFanTableOffset = ppInfoHeader.basicTable4.basicTable3.usFanTableOffset.getBinaryDataBlock().getIntegerLE();
+			int usExtendendedHeaderOffset = ppInfoHeader.basicTable4.basicTable3.usExtendendedHeaderOffset.getBinaryDataBlock().getIntegerLE();
+			int usVddcDependencyOnSCLKOffset = ppInfoHeader.basicTable4.usVddcDependencyOnSCLKOffset.getBinaryDataBlock().getIntegerLE();
+			int usVddciDependencyOnMCLKOffset = ppInfoHeader.basicTable4.usVddciDependencyOnMCLKOffset.getBinaryDataBlock().getIntegerLE();
+			int usVddcDependencyOnMCLKOffset = ppInfoHeader.basicTable4.usVddcDependencyOnMCLKOffset.getBinaryDataBlock().getIntegerLE();
+			int usMaxClockVoltageOnDCOffset = ppInfoHeader.basicTable4.usMaxClockVoltageOnDCOffset.getBinaryDataBlock().getIntegerLE();
+			int usVddcPhaseShedLimitsTableOffset = ppInfoHeader.basicTable4.usVddcPhaseShedLimitsTableOffset.getBinaryDataBlock().getIntegerLE();
+			int usMvddDependencyOnMCLKOffset = ppInfoHeader.basicTable4.usMvddDependencyOnMCLKOffset.getBinaryDataBlock().getIntegerLE();
+			int usCACLeakageTableOffset = ppInfoHeader.usCACLeakageTableOffset.getBinaryDataBlock().getIntegerLE();
+
+			
+			ppState.offsetPosition = usStateArrayOffset-4;
+			ppClockInfo.offsetPosition = usClockInfoArrayOffset-4;
+			ppNonClockInfo.offsetPosition = usNonClockInfoArrayOffset-4;
 			list.add(ppState);
-			//map.put(ppState, usStateArrayOffset);
-			/*int usFanTableOffset = ppInfoHeader.usFanTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Fan_Table");
-			map.put(ppFan, usFanTableOffset);
-			int usThermalControllerOffset = ppInfoHeader.usThermalControllerOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Thermal_Controller");
-			map.put(ppTermalController, usThermalControllerOffset);
-			int usMclkDependencyTableOffset = ppInfoHeader.usMclkDependencyTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_MCLK_Dependency_Table");
-			map.put(ppMclkDependency, usMclkDependencyTableOffset);
-			int usSclkDependencyTableOffset = ppInfoHeader.usSclkDependencyTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_SCLK_Dependency_Table");
-			map.put(ppSclkDependency, usSclkDependencyTableOffset);
-			int usVddcLookupTableOffset = ppInfoHeader.usVddcLookupTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Voltage_Lookup_Table");
-			map.put(ppVoltageLookup, usVddcLookupTableOffset);
-			int usVddgfxLookupTableOffset = ppInfoHeader.usVddgfxLookupTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Voltage_Lookup_Table");
-			map.put(ppVddgfxLookup, usVddgfxLookupTableOffset);
-			int usMMDependencyTableOffset = ppInfoHeader.usMMDependencyTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_MM_Dependency_Table");
-			map.put(ppMmDependency, usMMDependencyTableOffset);
-			int usVCEStateTableOffset = ppInfoHeader.usVCEStateTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_VCE_State_Table");
-			map.put(ppVceState, usVCEStateTableOffset);
-//			int usPPMTableOffset = ppInfoHeader.usPPMTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_PPM_Table");
-//			map.put(ppFan, usPPMTableOffset);
-			int usPowerTuneTableOffset = ppInfoHeader.usPowerTuneTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_PowerTune_Table");
-			map.put(ppPowerTune, usPowerTuneTableOffset);
-//			int usHardLimitTableOffset = ppInfoHeader.usHardLimitTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Hard_Limit_Table");
-//			map.put(ppFan, usHardLimitTableOffset);
-			int usPCIETableOffset = ppInfoHeader.usPCIETableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_PCIE_Table");
-			map.put(ppPCIE, usPCIETableOffset);
-//			int usGPIOTableOffset = ppInfoHeader.usGPIOTableOffset.getBinaryDataBlock().getIntegerLE();  //"points to ATOM_Tonga_GPIO_Table");
-//			map.put(ppFan, usGPIOTableOffset);
-			*/
-//			Map<IStructure, Integer> newMap = sortByValue(map);
-//			Set<Entry<IStructure, Integer>> set = newMap.entrySet();
-//			for (Entry<IStructure, Integer> entry : set) {
-//				list.add(entry.getKey());
-//			}
+			list.add(ppClockInfo);
+			list.add(ppNonClockInfo);
 		}
 		return list;
 	}
@@ -71,6 +53,8 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 	public void fillSubListDescriptions() {
 		ppInfoHeader.setName("ATOM_POWERPLAY_HEADER_V5");
 		ppState.setName("ATOM_POWERPLAY_STATE_TABLE");
+		ppClockInfo.setName("ATOM_POWERPLAY_CLOCK_INFO_TABLE");
+		ppNonClockInfo.setName("ATOM_POWERPLAY_NONCLOCK_INFO_TABLE");
 		/*ppVoltageLookup.setName("ATOM_POWERPLAY_VOLTAGE_LOOKUP_TABLE");
 		ppVddgfxLookup.setName("ATOM_POWERPLAY_VDDGFX_LOOKUP_TABLE");
 		ppSclkDependency.setName("ATOM_POWERPLAY_SCLK_DEPENDENCY_TABLE");

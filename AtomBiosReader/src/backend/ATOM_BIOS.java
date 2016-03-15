@@ -28,7 +28,7 @@ public class ATOM_BIOS {
 
 		int offsetI = Integer.decode(OFFSET_TO_POINTER_TO_ATOM_ROM_HEADER);
 		int lenghtPRE = 36;
-		System.out.println("off:'"+offsetI+"' lenPRE:'"+2+"'");
+		//System.out.println("off:'"+offsetI+"' lenPRE:'"+2+"'");
 		ByteBuffer bbD = mainBDB.getBody().duplicate();
 		bbD.position(offsetI);
 		ByteBuffer atomRomHeaderOffsetBB = bbD.slice();
@@ -36,7 +36,7 @@ public class ATOM_BIOS {
 		BinaryDataBlock atomRomHeaderOffsetBDB = new BinaryDataBlock(atomRomHeaderOffsetBB);
 		atomRomHeaderOffset.setBinaryDataBlock(atomRomHeaderOffsetBDB);
 		//atomRomHeaderOffset.process();
-		System.out.println("off:'"+atomRomHeaderOffset.getBinaryDataBlock().getIntegerLE()+"' lenPRE:'"+lenghtPRE+"'");
+		//System.out.println("off:'"+atomRomHeaderOffset.getBinaryDataBlock().getIntegerLE()+"' lenPRE:'"+lenghtPRE+"'");
 		ByteBuffer bbD2 = mainBDB.getBody().duplicate();
 		bbD2.position(atomRomHeaderOffset.getBinaryDataBlock().getIntegerLE());
 		ByteBuffer atomRomHeaderBB = bbD2.slice();
@@ -79,7 +79,7 @@ public class ATOM_BIOS {
 			int tableContentRevision = tableheader.ucTableContentRevision.getBinaryDataBlock().getIntegerLE();
 			int tableFormatRevision = tableheader.ucTableFormatRevision.getBinaryDataBlock().getIntegerLE();
 			String tableVersion = "v"+tableFormatRevision+"."+tableContentRevision;
-			System.out.println(tablename+" "+tableVersion);
+			//System.out.println(tablename+" "+tableVersion);
 			switch (tablename) {
 			case "VoltageObjectInfo":
 				switch (tableVersion) {
@@ -126,7 +126,7 @@ public class ATOM_BIOS {
 			int tableContentRevision = tableheader.ucTableContentRevision.getBinaryDataBlock().getIntegerLE();
 			int tableFormatRevision = tableheader.ucTableFormatRevision.getBinaryDataBlock().getIntegerLE();
 			String tableVersion = "v"+tableContentRevision+"."+tableFormatRevision;
-			System.out.println(tablename+" "+tableVersion);
+			//System.out.println(tablename+" "+tableVersion);
 			switch (tablename) {
 			default:
 				tableList.add(makeStubTable(atomTable));

@@ -2,6 +2,9 @@ package backend;
 import java.util.List;
 
 public interface IStructure {
+	boolean isOffsetBased();
+	int getOffsetPosition();
+	void setOffsetPosition(int position);
 	int getLength();
 
 	List<IStructure> getSubStructureList();
