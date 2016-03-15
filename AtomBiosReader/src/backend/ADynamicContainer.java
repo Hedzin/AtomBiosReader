@@ -6,6 +6,7 @@ public abstract class ADynamicContainer extends AStructure implements IDynamicCo
 
 @Override
 public void process() {
+	int oldpos = binDataBlock.getBody().position();
 	//System.out.println("(this instanceof IDynamicContainer");
 	subStructureList = getSubStructureList();
 	//System.out.println("!!!!!!!!!!!!!!!!!BEFORE DYN PRE RUN");

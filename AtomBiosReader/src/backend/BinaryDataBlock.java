@@ -15,6 +15,7 @@ public class BinaryDataBlock {
 	private int length;
 	private int offset;
 	private int version;
+	private int rootOffset = 0;
 
 	public int getLength() {
 		return length;
@@ -57,8 +58,10 @@ public class BinaryDataBlock {
 		return 0;
 	}
 	public int getOffset() {
-		
-		return offset;
+		System.out.println("getBody().arrayOffset()"+getBody().arrayOffset());
+		System.out.println("rootOffset"+rootOffset);
+		return getBody().arrayOffset()-rootOffset;
+		//return offset;
 	}
 	
 	
@@ -124,6 +127,14 @@ public class BinaryDataBlock {
 	}
 	public void setType(String type) {
 		this.type = type;
+		
+	}
+	public void setRootOffset(int rootOffset) {
+		this.rootOffset = rootOffset;
+		
+	}
+	public int getRootOffset() {
+		return rootOffset;
 		
 	}
 }

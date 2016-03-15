@@ -3,7 +3,7 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ATOM_POWERPLAY_STATE_OBJECT extends AContainer {
+public class ATOM_POWERPLAY_STATE_OBJECT_V7 extends AContainer {
 
 	ByteStructure EngineClockIndexHigh = new ByteStructure();
 	ByteStructure EngineClockIndexLow = new ByteStructure();

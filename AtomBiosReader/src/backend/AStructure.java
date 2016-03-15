@@ -116,6 +116,7 @@ public abstract class AStructure implements IStructure {
 			}
 			// System.out.println("AStructure process() "+structure.toString());
 			BinaryDataBlock bdb = new BinaryDataBlock();
+			bdb.setRootOffset(binDataBlock.getRootOffset());
 			// System.out.println("INbinDataBlock.getBody().position():
 			// "+binDataBlock.getBody().position());
 			// System.out.println("INbinDataBlock.getBody().limit():
@@ -135,7 +136,7 @@ public abstract class AStructure implements IStructure {
 			bb.limit(tLength);
 			bdb.setBody(bb);
 			bdb.setLength(tLength);
-			bdb.setOffset(position);
+			//bdb.setOffset(position);
 			bdb.setType(structure.getClass().getName());
 			
 			structure.setBinaryDataBlock(bdb);
@@ -146,6 +147,7 @@ public abstract class AStructure implements IStructure {
 			tLength = structure.getLength();
 			position += tLength;
 			bdb.setLength(tLength);
+			
 		}
 
 	}

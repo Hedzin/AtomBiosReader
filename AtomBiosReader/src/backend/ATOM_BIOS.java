@@ -97,9 +97,11 @@ public class ATOM_BIOS {
 				case "v7.1":
 					tableList.add(new ATOM_POWERPLAY_INFO_V7_1(getTableBDBbyOffset(offset)));
 					break;
-
+				case "v6.1":
+					tableList.add(new ATOM_POWERPLAY_INFO_V6_1(getTableBDBbyOffset(offset)));
+					break;
 				default:
-					Path path = Paths.get("ppt"+tableVersion+".txt");
+					Path path = Paths.get("ppt"+tableVersion+"_.txt");
 					try (BufferedWriter writer = Files.newBufferedWriter(path)) {
 					    writer.write(getTableBDBbyOffset(offset).getHexString());
 					} catch (IOException e) {
@@ -173,6 +175,7 @@ public class ATOM_BIOS {
 		ByteBuffer finalBB = bbD2.slice();
 		finalBB.limit(size.getBinaryDataBlock().getIntegerLE());
 		BinaryDataBlock finalBDB = new BinaryDataBlock(finalBB);
+		finalBDB.setRootOffset(offset);
 		return finalBDB;
 		
 	}

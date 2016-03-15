@@ -1,0 +1,1 @@
+"%java_home%"\bin\javaw.exe -jar AtomBiosReader.jar

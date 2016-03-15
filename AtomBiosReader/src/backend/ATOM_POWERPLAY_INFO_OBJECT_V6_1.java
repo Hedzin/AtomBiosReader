@@ -10,19 +10,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public class ATOM_POWERPLAY_INFO_OBJECT_V7_1 extends ADynamicContainer  {
-	ATOM_POWERPLAY_INFO_HEADER_V7_1 ppInfoHeader = new ATOM_POWERPLAY_INFO_HEADER_V7_1();
-	ATOM_POWERPLAY_STATE_TABLE_V7 ppState = new ATOM_POWERPLAY_STATE_TABLE_V7();
-	ATOM_POWERPLAY_VOLTAGE_LOOKUP_TABLE ppVoltageLookup = new ATOM_POWERPLAY_VOLTAGE_LOOKUP_TABLE();
-	ATOM_POWERPLAY_VDDGFX_LOOKUP_TABLE ppVddgfxLookup = new ATOM_POWERPLAY_VDDGFX_LOOKUP_TABLE();
-	ATOM_POWERPLAY_SCLK_DEPENDENCY_TABLE ppSclkDependency = new ATOM_POWERPLAY_SCLK_DEPENDENCY_TABLE();
-	ATOM_POWERPLAY_MCLK_DEPENDENCY_TABLE ppMclkDependency = new ATOM_POWERPLAY_MCLK_DEPENDENCY_TABLE();
-	ATOM_POWERPLAY_MM_DEPENDENCY_TABLE ppMmDependency = new ATOM_POWERPLAY_MM_DEPENDENCY_TABLE();
-	ATOM_POWERPLAY_THERMAL_CONTROLLER_TABLE_V1 ppTermalController = new ATOM_POWERPLAY_THERMAL_CONTROLLER_TABLE_V1();
-	ATOM_POWERPLAY_FAN_TABLE_V5 ppFan = new ATOM_POWERPLAY_FAN_TABLE_V5();
-	ATOM_POWERPLAY_POWERTUNE_TABLE_V2 ppPowerTune = new ATOM_POWERPLAY_POWERTUNE_TABLE_V2();
-	ATOM_POWERPLAY_VCE_STATE_TABLE ppVceState = new ATOM_POWERPLAY_VCE_STATE_TABLE();
-	ATOM_POWERPLAY_PCIE_TABLE ppPCIE = new ATOM_POWERPLAY_PCIE_TABLE();
+public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
+	ATOM_POWERPLAY_INFO_HEADER_V5 ppInfoHeader = new ATOM_POWERPLAY_INFO_HEADER_V5();
+	ATOM_POWERPLAY_STATE_TABLE_V6 ppState = new ATOM_POWERPLAY_STATE_TABLE_V6();
 	
 	@Override
 	public List<IStructure> getSubStructureList() {
@@ -31,9 +21,16 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V7_1 extends ADynamicContainer  {
 		if(ppInfoHeader.getBinaryDataBlock()!=null){
 			HashMap<IStructure, Integer> map = new HashMap<IStructure, Integer>();
 			
-			int usStateArrayOffset = ppInfoHeader.usStateArrayOffset.getBinaryDataBlock().getIntegerLE();  //"points to ATOM_Tonga_State_Array");
+			/*
+		    usClockInfoArrayOffset  // offset from start of this table to array of ASIC-specific structures,currently ATOM_PPLIB_CLOCK_INFO.
+		    usNonClockInfoArrayOffset // offset from start of this table to array of ATOM_PPLIB_NONCLOCK_INFO
+		    usBootClockInfoOffset 
+		    usBootNonClockInfoOffset 
+			*/
+			
+			int usStateArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usStateArrayOffset.getBinaryDataBlock().getIntegerLE();  //"points to ATOM_Tonga_State_Array");
 			map.put(ppState, usStateArrayOffset);
-			int usFanTableOffset = ppInfoHeader.usFanTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Fan_Table");
+			/*int usFanTableOffset = ppInfoHeader.usFanTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Fan_Table");
 			map.put(ppFan, usFanTableOffset);
 			int usThermalControllerOffset = ppInfoHeader.usThermalControllerOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Thermal_Controller");
 			map.put(ppTermalController, usThermalControllerOffset);
@@ -59,6 +56,7 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V7_1 extends ADynamicContainer  {
 			map.put(ppPCIE, usPCIETableOffset);
 //			int usGPIOTableOffset = ppInfoHeader.usGPIOTableOffset.getBinaryDataBlock().getIntegerLE();  //"points to ATOM_Tonga_GPIO_Table");
 //			map.put(ppFan, usGPIOTableOffset);
+			*/
 			Map<IStructure, Integer> newMap = sortByValue(map);
 			Set<Entry<IStructure, Integer>> set = newMap.entrySet();
 			for (Entry<IStructure, Integer> entry : set) {
@@ -69,9 +67,9 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V7_1 extends ADynamicContainer  {
 	}
 	@Override
 	public void fillSubListDescriptions() {
-		ppInfoHeader.setName("ATOM_POWERPLAY_HEADER");
+		ppInfoHeader.setName("ATOM_POWERPLAY_HEADER_V5");
 		ppState.setName("ATOM_POWERPLAY_STATE_TABLE");
-		ppVoltageLookup.setName("ATOM_POWERPLAY_VOLTAGE_LOOKUP_TABLE");
+		/*ppVoltageLookup.setName("ATOM_POWERPLAY_VOLTAGE_LOOKUP_TABLE");
 		ppVddgfxLookup.setName("ATOM_POWERPLAY_VDDGFX_LOOKUP_TABLE");
 		ppSclkDependency.setName("ATOM_POWERPLAY_SCLK_DEPENDENCY_TABLE");
 		ppMclkDependency.setName("ATOM_POWERPLAY_MCLK_DEPENDENCY_TABLE");
@@ -81,7 +79,7 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V7_1 extends ADynamicContainer  {
 		ppPowerTune.setName("ATOM_POWERPLAY_POWERTUNE_TABLE_V2");
 		ppVceState.setName("ATOM_POWERPLAY_VCE_STATE_TABLE");
 		ppPCIE.setName("ATOM_POWERPLAY_PCIE_TABLE");
-		super.fillSubListDescriptions();
+		*/super.fillSubListDescriptions();
 	}
 	
 	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {

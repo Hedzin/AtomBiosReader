@@ -3,23 +3,23 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ATOM_POWERPLAY_STATE_TABLE extends ADynamicContainer {
-	ATOM_POWERPLAY_HEADER ppHeader =  new ATOM_POWERPLAY_HEADER();
-	ATOM_POWERPLAY_STATE_OBJECT ppStateObject1 =  new ATOM_POWERPLAY_STATE_OBJECT();
-	ATOM_POWERPLAY_STATE_OBJECT ppStateObject2 =  new ATOM_POWERPLAY_STATE_OBJECT();
-	ATOM_POWERPLAY_STATE_OBJECT ppStateObject3 =  new ATOM_POWERPLAY_STATE_OBJECT();
-	ATOM_POWERPLAY_STATE_OBJECT ppStateObject4 =  new ATOM_POWERPLAY_STATE_OBJECT();
-	ATOM_POWERPLAY_STATE_OBJECT ppStateObject5 =  new ATOM_POWERPLAY_STATE_OBJECT();
-	ATOM_POWERPLAY_STATE_OBJECT ppStateObject6 =  new ATOM_POWERPLAY_STATE_OBJECT();
-	ATOM_POWERPLAY_STATE_OBJECT ppStateObject7 =  new ATOM_POWERPLAY_STATE_OBJECT();
-	ATOM_POWERPLAY_STATE_OBJECT ppStateObject8 =  new ATOM_POWERPLAY_STATE_OBJECT();
+public class ATOM_POWERPLAY_STATE_TABLE_V6 extends ADynamicContainer {
+	ByteStructure ucNumEntries =  new ByteStructure();
+	ATOM_POWERPLAY_STATE_OBJECT_V2 ppStateObject1 =  new ATOM_POWERPLAY_STATE_OBJECT_V2();
+	ATOM_POWERPLAY_STATE_OBJECT_V2 ppStateObject2 =  new ATOM_POWERPLAY_STATE_OBJECT_V2();
+	ATOM_POWERPLAY_STATE_OBJECT_V2 ppStateObject3 =  new ATOM_POWERPLAY_STATE_OBJECT_V2();
+	ATOM_POWERPLAY_STATE_OBJECT_V2 ppStateObject4 =  new ATOM_POWERPLAY_STATE_OBJECT_V2();
+	ATOM_POWERPLAY_STATE_OBJECT_V2 ppStateObject5 =  new ATOM_POWERPLAY_STATE_OBJECT_V2();
+	ATOM_POWERPLAY_STATE_OBJECT_V2 ppStateObject6 =  new ATOM_POWERPLAY_STATE_OBJECT_V2();
+	ATOM_POWERPLAY_STATE_OBJECT_V2 ppStateObject7 =  new ATOM_POWERPLAY_STATE_OBJECT_V2();
+	ATOM_POWERPLAY_STATE_OBJECT_V2 ppStateObject8 =  new ATOM_POWERPLAY_STATE_OBJECT_V2();
 
 	@Override
 	public List<IStructure> getSubStructureList() {
 		List<IStructure> list = new  ArrayList<IStructure>();
-		list.add(ppHeader);
-		if(ppHeader.getBinaryDataBlock()!=null){
-			int objectCounter = ppHeader.numEntries.getBinaryDataBlock().getIntegerLE();
+		list.add(ucNumEntries);
+		if(ucNumEntries.getBinaryDataBlock()!=null){
+			int objectCounter = ucNumEntries.getBinaryDataBlock().getIntegerLE();
 			switch (objectCounter) {
 			case 8:	list.add(ppStateObject8);
 			case 7:	list.add(ppStateObject7);	
@@ -37,7 +37,9 @@ public class ATOM_POWERPLAY_STATE_TABLE extends ADynamicContainer {
 	}
 	@Override
 	public void fillSubListDescriptions() {
-		ppHeader.setName("ATOM_POWERPLAY_HEADER");
+		ucNumEntries.setName("NumEntries");
+		
+		ucNumEntries.setDescription("how many states we have ");
 		ppStateObject1.setName("ATOM_POWERPLAY_STATE_OBJECT_1");
 	    ppStateObject2.setName("ATOM_POWERPLAY_STATE_OBJECT_2");
 	    ppStateObject3.setName("ATOM_POWERPLAY_STATE_OBJECT_3");
