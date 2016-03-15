@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 	ATOM_POWERPLAY_INFO_HEADER_V5 ppInfoHeader = new ATOM_POWERPLAY_INFO_HEADER_V5();
 	ATOM_POWERPLAY_STATE_TABLE_V6 ppState = new ATOM_POWERPLAY_STATE_TABLE_V6();
-	
 	@Override
 	public List<IStructure> getSubStructureList() {
 		List<IStructure> list = new  ArrayList<IStructure>();
@@ -29,7 +28,10 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 			*/
 			
 			int usStateArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usStateArrayOffset.getBinaryDataBlock().getIntegerLE();  //"points to ATOM_Tonga_State_Array");
-			map.put(ppState, usStateArrayOffset);
+			ppState.offsetBased =  true;
+			ppState.offsetPosition = usStateArrayOffset;
+			list.add(ppState);
+			//map.put(ppState, usStateArrayOffset);
 			/*int usFanTableOffset = ppInfoHeader.usFanTableOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Fan_Table");
 			map.put(ppFan, usFanTableOffset);
 			int usThermalControllerOffset = ppInfoHeader.usThermalControllerOffset.getBinaryDataBlock().getIntegerLE();   //"points to ATOM_Tonga_Thermal_Controller");
@@ -57,11 +59,11 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 //			int usGPIOTableOffset = ppInfoHeader.usGPIOTableOffset.getBinaryDataBlock().getIntegerLE();  //"points to ATOM_Tonga_GPIO_Table");
 //			map.put(ppFan, usGPIOTableOffset);
 			*/
-			Map<IStructure, Integer> newMap = sortByValue(map);
-			Set<Entry<IStructure, Integer>> set = newMap.entrySet();
-			for (Entry<IStructure, Integer> entry : set) {
-				list.add(entry.getKey());
-			}
+//			Map<IStructure, Integer> newMap = sortByValue(map);
+//			Set<Entry<IStructure, Integer>> set = newMap.entrySet();
+//			for (Entry<IStructure, Integer> entry : set) {
+//				list.add(entry.getKey());
+//			}
 		}
 		return list;
 	}

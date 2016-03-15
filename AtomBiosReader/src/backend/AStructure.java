@@ -6,6 +6,8 @@ import java.util.List;
 
 public abstract class AStructure implements IStructure {
 	int lenght = 0;
+	boolean offsetBased = false;
+	int offsetPosition = 0;
 	String name = "";
 	String description= "";
 	List<IStructure> subStructureList = new ArrayList<IStructure>();
@@ -114,40 +116,32 @@ public abstract class AStructure implements IStructure {
 				keyStr.setBinaryDataBlock(bdb);
 				((IFantomContainer) structure).parseKeyStructure(keyStr);
 			}
-			// System.out.println("AStructure process() "+structure.toString());
 			BinaryDataBlock bdb = new BinaryDataBlock();
 			bdb.setRootOffset(binDataBlock.getRootOffset());
-			// System.out.println("INbinDataBlock.getBody().position():
-			// "+binDataBlock.getBody().position());
-			// System.out.println("INbinDataBlock.getBody().limit():
-			// "+binDataBlock.getBody().limit());
-			// System.out.println("INbinDataBlock.getBody().capacity():
-			// "+binDataBlock.getBody().capacity());
-
-			ByteBuffer tBB = binDataBlock.getBody().duplicate();
 			int tLength = structure.getLength();
-			//System.out.println("AStructure process() tLength: "+structure.getName()+"  :"+tLength);
-			// System.out.println("AStructure process() position: "+position);
-			tBB.position(position);
+			ByteBuffer tBB = binDataBlock.getBody().duplicate();
+			if(offsetBased){
+				System.out.println(offsetPosition);
+				System.out.println(tBB.position());
+				System.out.println(tBB.limit());
+				tBB.limit(tBB.capacity());
+				tBB.position(offsetPosition);
+			}else{
+
+				tBB.position(position);
+
+			}
 			ByteBuffer bb = tBB.slice();
-			// System.out.println("bb.position(): "+bb.position());
-			// System.out.println("bb.limit(): "+bb.limit());
-			// System.out.println("bb.capacity(): "+bb.capacity());
 			bb.limit(tLength);
 			bdb.setBody(bb);
 			bdb.setLength(tLength);
-			//bdb.setOffset(position);
 			bdb.setType(structure.getClass().getName());
-			
 			structure.setBinaryDataBlock(bdb);
 			binDataBlock.getChildList().add(bdb);
-			//System.out.println(bdb.getName());
-			//bdb.printHexString();
 			structure.init();
 			tLength = structure.getLength();
 			position += tLength;
 			bdb.setLength(tLength);
-			
 		}
 
 	}

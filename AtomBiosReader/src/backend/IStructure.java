@@ -4,7 +4,6 @@ import java.util.List;
 public interface IStructure {
 	int getLength();
 
-
 	List<IStructure> getSubStructureList();
 
 //	StructureType getType();
