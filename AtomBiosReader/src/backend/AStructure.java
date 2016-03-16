@@ -131,25 +131,23 @@ public abstract class AStructure implements IStructure {
 			int tLength = structure.getLength();
 			ByteBuffer tBB = binDataBlock.getBody().duplicate();
 			if(structure.isOffsetBased()){
-				System.out.println(offsetPosition);
-				System.out.println(tBB.position());
-				System.out.println(tBB.limit());
+				//System.out.println(offsetPosition);
+				//System.out.println(tBB.position());
 				tBB.limit(tBB.capacity());
 				tBB.position(structure.getOffsetPosition());
 			}else{
-
 				tBB.position(position);
 
 			}
 			ByteBuffer bb = tBB.slice();
-			bb.limit(tLength);
 			bdb.setBody(bb);
-			bdb.setLength(tLength);
 			bdb.setType(structure.getClass().getName());
 			structure.setBinaryDataBlock(bdb);
 			binDataBlock.getChildList().add(bdb);
 			structure.init();
 			tLength = structure.getLength();
+			bb.limit(tLength);
+			
 			position += tLength;
 			bdb.setLength(tLength);
 		}

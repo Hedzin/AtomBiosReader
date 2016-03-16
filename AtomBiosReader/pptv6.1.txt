@@ -399,7 +399,7 @@ f049
 02
 08ff
 ******(320) usCACLeakageTableOffset;         // Points to ATOM_PPLIB_CAC_Leakage_Table
-typedef struct _ATOM_PPLIB_CAC_Leakage_Table
+typedef struct _ATOM_PPLIB_CAC_LEAKAGE_TABLE
 {
     UCHAR ucNumEntries;                                                 // Number of entries.
     ATOM_PPLIB_CAC_Leakage_Record entries[1];                           // Dynamically allocate entries.
@@ -458,7 +458,7 @@ b604
 ******(369)
 usVddcPhaseShedLimitsTableOffset;    // Points to ATOM_PPLIB_PhaseSheddingLimits_Table
 
-typedef struct _ATOM_PPLIB_PhaseSheddingLimits_Table
+typedef struct _ATOM_PPLIB_PHASESHEDDINGLIMITS_TABLE
 {
     UCHAR ucNumEntries;                                                 // Number of entries.
     ATOM_PPLIB_PhaseSheddingLimits_Record entries[1];                   // Dynamically allocate entries.
