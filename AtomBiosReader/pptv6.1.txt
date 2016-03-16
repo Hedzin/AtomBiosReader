@@ -253,14 +253,15 @@ typedef struct _ATOM_PPLIB_FANTABLE2
 } ATOM_PPLIB_FANTABLE2;
 27f0
 (****190)
-2300
-2800
-e412
-9808
+23
+0028
+00e4
+1298
+08000000
+00
+00
 0000
-0000
-0000
-0000
+00
 *******(206) usExtendendedHeaderOffset
 
 typedef struct _ATOM_PPLIB_EXTENDEDHEADER

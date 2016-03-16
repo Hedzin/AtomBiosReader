@@ -15,7 +15,8 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 	ATOM_POWERPLAY_STATE_TABLE_V6 ppState = new ATOM_POWERPLAY_STATE_TABLE_V6();
 	ATOM_POWERPLAY_CLOCK_INFO_TABLE ppClockInfo = new ATOM_POWERPLAY_CLOCK_INFO_TABLE();
 	ATOM_POWERPLAY_NONCLOCK_INFO_TABLE ppNonClockInfo = new ATOM_POWERPLAY_NONCLOCK_INFO_TABLE();
-	
+	ATOM_POWERPLAY_FAN_TABLE_V5  ppFan  = new ATOM_POWERPLAY_FAN_TABLE_V5();
+	ATOM_POWERPLAY_EXTENDEDHEADER ppExtHeader = new ATOM_POWERPLAY_EXTENDEDHEADER();
 	@Override
 	public List<IStructure> getSubStructureList() {
 		List<IStructure> list = new  ArrayList<IStructure>();
@@ -24,12 +25,15 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 			ppState.offsetBased =  true;
 			ppClockInfo.offsetBased =  true;
 			ppNonClockInfo.offsetBased =  true;
+			ppFan.offsetBased =  true;
+			ppExtHeader.offsetBased =  true;
+			
+			
 			int usStateArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usStateArrayOffset.getBinaryDataBlock().getIntegerLE();
 			int usClockInfoArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usClockInfoArrayOffset.getBinaryDataBlock().getIntegerLE();
 			int usNonClockInfoArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.basicTable.usNonClockInfoArrayOffset.getBinaryDataBlock().getIntegerLE();
-	
-			int usCustomThermalPolicyArrayOffset = ppInfoHeader.basicTable4.basicTable3.basicTable2.usCustomThermalPolicyArrayOffset.getBinaryDataBlock().getIntegerLE();
 			int usFanTableOffset = ppInfoHeader.basicTable4.basicTable3.usFanTableOffset.getBinaryDataBlock().getIntegerLE();
+
 			int usExtendendedHeaderOffset = ppInfoHeader.basicTable4.basicTable3.usExtendendedHeaderOffset.getBinaryDataBlock().getIntegerLE();
 			int usVddcDependencyOnSCLKOffset = ppInfoHeader.basicTable4.usVddcDependencyOnSCLKOffset.getBinaryDataBlock().getIntegerLE();
 			int usVddciDependencyOnMCLKOffset = ppInfoHeader.basicTable4.usVddciDependencyOnMCLKOffset.getBinaryDataBlock().getIntegerLE();
@@ -43,9 +47,13 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 			ppState.offsetPosition = usStateArrayOffset-4;
 			ppClockInfo.offsetPosition = usClockInfoArrayOffset-4;
 			ppNonClockInfo.offsetPosition = usNonClockInfoArrayOffset-4;
+			ppFan.offsetPosition = usFanTableOffset-4;
+			ppExtHeader.offsetPosition = usExtendendedHeaderOffset-4;
 			list.add(ppState);
 			list.add(ppClockInfo);
 			list.add(ppNonClockInfo);
+			list.add(ppFan);
+			list.add(ppExtHeader);
 		}
 		return list;
 	}
@@ -55,13 +63,15 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 		ppState.setName("ATOM_POWERPLAY_STATE_TABLE");
 		ppClockInfo.setName("ATOM_POWERPLAY_CLOCK_INFO_TABLE");
 		ppNonClockInfo.setName("ATOM_POWERPLAY_NONCLOCK_INFO_TABLE");
+		ppFan.setName("ATOM_POWERPLAY_FAN_TABLE_V5");
+		ppExtHeader.setName("ATOM_POWERPLAY_EXTENDEDHEADER");
 		/*ppVoltageLookup.setName("ATOM_POWERPLAY_VOLTAGE_LOOKUP_TABLE");
 		ppVddgfxLookup.setName("ATOM_POWERPLAY_VDDGFX_LOOKUP_TABLE");
 		ppSclkDependency.setName("ATOM_POWERPLAY_SCLK_DEPENDENCY_TABLE");
 		ppMclkDependency.setName("ATOM_POWERPLAY_MCLK_DEPENDENCY_TABLE");
 		ppMmDependency.setName("ATOM_POWERPLAY_MM_DEPENDENCY_TABLE");
 		ppTermalController.setName("ATOM_POWERPLAY_THERMAL_CONTROLLER_TABLE_V1");
-		ppFan.setName("ATOM_POWERPLAY_FAN_TABLE_V5");
+		
 		ppPowerTune.setName("ATOM_POWERPLAY_POWERTUNE_TABLE_V2");
 		ppVceState.setName("ATOM_POWERPLAY_VCE_STATE_TABLE");
 		ppPCIE.setName("ATOM_POWERPLAY_PCIE_TABLE");
