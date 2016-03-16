@@ -15,7 +15,7 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 	ATOM_POWERPLAY_STATE_TABLE_V6 ppState = new ATOM_POWERPLAY_STATE_TABLE_V6();
 	ATOM_POWERPLAY_CLOCK_INFO_TABLE ppClockInfo = new ATOM_POWERPLAY_CLOCK_INFO_TABLE();
 	ATOM_POWERPLAY_NONCLOCK_INFO_TABLE ppNonClockInfo = new ATOM_POWERPLAY_NONCLOCK_INFO_TABLE();
-	ATOM_POWERPLAY_FAN_TABLE_V5  ppFan  = new ATOM_POWERPLAY_FAN_TABLE_V5();
+	ATOM_POWERPLAY_FAN_TABLE  ppFan  = new ATOM_POWERPLAY_FAN_TABLE();
 	ATOM_POWERPLAY_EXTENDEDHEADER ppExtHeader = new ATOM_POWERPLAY_EXTENDEDHEADER();
 	@Override
 	public List<IStructure> getSubStructureList() {
@@ -59,11 +59,11 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 	}
 	@Override
 	public void fillSubListDescriptions() {
-		ppInfoHeader.setName("ATOM_POWERPLAY_HEADER_V5");
+		ppInfoHeader.setName("ATOM_POWERPLAY_HEADER");
 		ppState.setName("ATOM_POWERPLAY_STATE_TABLE");
 		ppClockInfo.setName("ATOM_POWERPLAY_CLOCK_INFO_TABLE");
 		ppNonClockInfo.setName("ATOM_POWERPLAY_NONCLOCK_INFO_TABLE");
-		ppFan.setName("ATOM_POWERPLAY_FAN_TABLE_V5");
+		ppFan.setName("ATOM_POWERPLAY_FAN_TABLE");
 		ppExtHeader.setName("ATOM_POWERPLAY_EXTENDEDHEADER");
 		/*ppVoltageLookup.setName("ATOM_POWERPLAY_VOLTAGE_LOOKUP_TABLE");
 		ppVddgfxLookup.setName("ATOM_POWERPLAY_VDDGFX_LOOKUP_TABLE");
