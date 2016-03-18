@@ -4,6 +4,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public abstract class AStructure implements IStructure {
 	int lenght = 0;
 	boolean offsetBased = false;
@@ -164,6 +167,31 @@ public abstract class AStructure implements IStructure {
 		this.binDataBlock.setComment(getDescription());
 		//System.out.println("nameaf: "+name);
 		
+	}
+	void checkIsValuePositive(int value,String valueName, boolean flag){
+		
+		if(flag){
+			if(value>0){
+				//good
+			}else{
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Unexpected offset value");
+				alert.setContentText("Unexpected offset value "+valueName+" :\n" + value);
+				alert.showAndWait();
+			}
+		}
+		else{
+			if(value>0){
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Unexpected offset value");
+				alert.setContentText("Unexpected offset value "+valueName+" :\n" + value);
+				alert.showAndWait();
+			}else{
+				//good
+			}
+		}
 	}
 
 }

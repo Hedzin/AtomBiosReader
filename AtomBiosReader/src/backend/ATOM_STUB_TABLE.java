@@ -15,13 +15,19 @@ public class ATOM_STUB_TABLE  extends AtomTable{
 
 	
 	 ATOM_COMMON_TABLE_HEADER	sHeader = new ATOM_COMMON_TABLE_HEADER();
-	 //ATOM_STUB_OBJECT stubObject = new ATOM_STUB_OBJECT();
+	 ATOM_STUB_OBJECT stubObject = new ATOM_STUB_OBJECT();
 
 	@Override
 	public List<IStructure> getSubStructureList() {
 		List<IStructure> list = new  ArrayList<IStructure>();
 		list.add(sHeader);
-		//list.add(stubObject);
+		
+			int structureSize = binDataBlock.getLength();
+			int stubSize = structureSize-4;
+			stubObject.setLength(stubSize);
+			list.add(stubObject);
+
+		
 
 		return list;
 	}
@@ -29,8 +35,8 @@ public class ATOM_STUB_TABLE  extends AtomTable{
 	@Override
 	public void fillSubListDescriptions() {
 		sHeader.setName("CommonTableHeader");
-		//stubObject.setName("UNPARSED DATA");
-		//stubObject.setDescription("not supported, yet");
+		stubObject.setName("UNPARSED DATA");
+		stubObject.setDescription("not supported, yet");
 		super.fillSubListDescriptions();
 	}
 

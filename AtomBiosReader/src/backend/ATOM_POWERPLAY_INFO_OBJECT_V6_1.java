@@ -65,6 +65,23 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 			int usMvddDependencyOnMCLKOffset = ppInfoHeader.basicTable4.usMvddDependencyOnMCLKOffset.getBinaryDataBlock().getIntegerLE();
 
 			
+			checkIsValuePositive(usStateArrayOffset,"usStateArrayOffset",true);
+			checkIsValuePositive(usClockInfoArrayOffset,"usClockInfoArrayOffset",true);
+			checkIsValuePositive(usNonClockInfoArrayOffset,"usNonClockInfoArrayOffset",true);
+			checkIsValuePositive(usFanTableOffset,"usFanTableOffset",true);
+			checkIsValuePositive(usExtendendedHeaderOffset,"usExtendendedHeaderOffset",true);
+			checkIsValuePositive(usVddcDependencyOnSCLKOffset,"usVddcDependencyOnSCLKOffset",true);
+			checkIsValuePositive(usVddciDependencyOnMCLKOffset,"usVddciDependencyOnMCLKOffset",true);
+			checkIsValuePositive(usVddcDependencyOnMCLKOffset,"usVddcDependencyOnMCLKOffset",true);
+			checkIsValuePositive(usCACLeakageTableOffset,"usCACLeakageTableOffset",true);
+			checkIsValuePositive(usVddcPhaseShedLimitsTableOffset,"usVddcPhaseShedLimitsTableOffset",true);
+			
+			checkIsValuePositive(usMaxClockVoltageOnDCOffset,"usMaxClockVoltageOnDCOffset",false);
+			checkIsValuePositive(usMvddDependencyOnMCLKOffset,"usMvddDependencyOnMCLKOffset",false);
+
+			
+
+			
 			ppState.offsetPosition = usStateArrayOffset-4;
 			ppClockInfo.offsetPosition = usClockInfoArrayOffset-4;
 			ppNonClockInfo.offsetPosition = usNonClockInfoArrayOffset-4;
@@ -112,6 +129,20 @@ public class ATOM_POWERPLAY_INFO_OBJECT_V6_1 extends ADynamicContainer  {
 			    int  usPPMTableOffset = ppExtHeader.usPPMTableOffset.getBinaryDataBlock().getIntegerLE();
 			    int  usSclkVddgfxTableOffset = ppExtHeader.usSclkVddgfxTableOffset.getBinaryDataBlock().getIntegerLE();
 
+			    
+			    
+				checkIsValuePositive(usVCETableOffset,"usVCETableOffset",true);
+				checkIsValuePositive(usUVDTableOffset,"usUVDTableOffset",true);
+				checkIsValuePositive(usACPTableOffset,"usACPTableOffset",true);
+				checkIsValuePositive(usSAMUTableOffset,"usSAMUTableOffset",true);
+				checkIsValuePositive(usPowerTuneTableOffset,"usPowerTuneTableOffset",true);
+
+				checkIsValuePositive(usPPMTableOffset,"usPPMTableOffset",false);
+				checkIsValuePositive(usSclkVddgfxTableOffset,"usSclkVddgfxTableOffset",false);
+
+			    
+			    
+			    
 			    ppVceState.offsetPosition = usVCETableOffset-4;
 			    ppUvdTable.offsetPosition = usUVDTableOffset-4;
 			    ppAcpTable.offsetPosition = usACPTableOffset-4;

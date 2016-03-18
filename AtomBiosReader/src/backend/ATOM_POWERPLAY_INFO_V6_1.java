@@ -6,6 +6,7 @@ public class ATOM_POWERPLAY_INFO_V6_1  extends AtomTable{
 	public ATOM_POWERPLAY_INFO_V6_1(BinaryDataBlock bdb) {
 		setBinaryDataBlock(bdb);
 		init();
+		checkTable();
 	}
 
 	{
